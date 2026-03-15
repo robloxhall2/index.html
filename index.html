@@ -5,236 +5,149 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Roblox Music Events</title>
     <style>
-        /* ВОЗВРАЩАЕМ СТИЛЬ И АТМОСФЕРУ */
         html, body {
-            background-color: #000; /* Глубокий черный */
+            background-color: #000;
             color: #fff;
-            /* Элегантный шрифт с засечками для заголовков */
-            font-family: 'Times New Roman', Times, serif; 
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
             overflow-x: hidden;
         }
 
-        body {
-            /* Высота для красивого, неспешного скролла */
-            height: 300vh; 
-            position: relative;
-        }
+        body { height: 300vh; position: relative; }
 
-        /* АНИМИРОВАННЫЙ ФОН (Медленный и мистический) */
+        /* Фоновый паттерн (медленный и тусклый) */
         .bg-pattern {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            z-index: 1;
-            pointer-events: none;
-            overflow: hidden;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 1; pointer-events: none; overflow: hidden;
         }
-
         .bg-grid {
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            display: flex;
-            flex-wrap: wrap;
-            align-content: space-around;
-            justify-content: space-around;
+            position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            display: flex; flex-wrap: wrap; align-content: space-around; justify-content: space-around;
             transform: rotate(-15deg);
-            /* Очень медленное движение: 150 секунд */
             animation: diagonalMove 150s linear infinite;
         }
-
         .bg-item {
-            font-size: 2.5rem;
-            font-weight: 900;
-            /* Едва заметный серый, чтобы не отвлекать */
-            color: rgba(255, 255, 255, 0.04); 
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            white-space: nowrap;
-            margin: 20px 40px;
-            user-select: none;
+            font-size: 2.5rem; font-weight: 900;
+            color: rgba(255, 255, 255, 0.03); 
+            text-transform: uppercase; letter-spacing: 5px; margin: 20px 40px;
         }
-
         @keyframes diagonalMove {
             from { transform: rotate(-15deg) translate(0, 0); }
             to { transform: rotate(-15deg) translate(-10%, -10%); }
         }
 
-        /* КРАСИВЫЕ КРУПНЫЕ СЕКЦИИ */
+        /* Декоративные элементы для заполнения "воздуха" */
+        .decor-line {
+            position: absolute; left: 50%; transform: translateX(-50%);
+            width: 1px; height: 100px;
+            background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.2), transparent);
+            z-index: 2;
+        }
+        .side-coords {
+            position: absolute; right: 20px; font-family: monospace;
+            font-size: 0.6rem; color: rgba(255,255,255,0.2);
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+
+        /* Секции */
         .section {
-            height: 100vh; /* Каждая секция на весь экран */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 2; /* Поверх фона */
-            text-align: center;
-            padding: 0 20px;
-            box-sizing: border-box;
+            height: 100vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            position: relative; z-index: 3; text-align: center; padding: 0 20px;
         }
 
-        /* СЕКЦИЯ 1: ПРИВЕТСТВИЕ (Много воздуха) */
-        .hero-content {
-            max-width: 600px;
-        }
-
+        /* Заголовок */
         h1 { 
-            /* Крупный, красивый шрифт */
-            font-size: clamp(1.8rem, 6vw, 2.8rem); 
-            text-transform: uppercase; 
-            letter-spacing: 6px; 
-            font-weight: 400; 
-            margin: 0;
-            line-height: 1.3;
+            font-size: clamp(1.8rem, 6vw, 2.5rem); 
+            text-transform: uppercase; letter-spacing: 8px; 
+            font-weight: 400; margin: 0; line-height: 1.2;
         }
-
         .author { 
-            font-size: 0.7rem; 
-            color: rgba(255,255,255,0.3); 
-            text-transform: uppercase; 
-            letter-spacing: 4px; 
-            margin-top: 20px;
-            font-family: 'Courier New', monospace; /* Печатная машинка для контраста */
-        }
-
-        .description-text {
-            max-width: 400px;
-            margin: 40px auto 0;
+            font-size: 0.7rem; color: rgba(255,255,255,0.3); 
+            text-transform: uppercase; letter-spacing: 4px; margin-top: 15px;
             font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.5);
-            letter-spacing: 1px;
-            line-height: 1.6;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 20px;
+        }
+        .description-text {
+            max-width: 400px; margin: 30px auto 0;
+            font-family: 'Courier New', monospace; font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.4); letter-spacing: 1px; line-height: 1.6;
         }
 
-        /* СЕКЦИЯ 2: TELEGRAM (Лаконично и стильно) */
+        /* Кнопка */
         .rme-title { 
-            /* Огромный логотип RME */
-            font-size: clamp(4rem, 15vw, 8rem); 
-            letter-spacing: 25px; 
-            font-weight: bold; 
-            margin-bottom: 30px; 
-            color: rgba(255,255,255,0.9);
+            font-size: clamp(4rem, 15vw, 7rem); letter-spacing: 20px; 
+            font-weight: bold; margin-bottom: 20px; opacity: 0.9;
         }
-
         .tg-link { 
-            font-family: 'Courier New', monospace; 
-            color: #fff; 
-            text-decoration: none; 
-            border: 1px solid rgba(255,255,255,0.2); 
-            padding: 15px 40px; 
-            text-transform: uppercase; 
-            font-size: 0.9rem; 
-            letter-spacing: 3px;
-            transition: 0.3s;
+            font-family: 'Courier New', monospace; color: #fff; 
+            text-decoration: none; border: 1px solid rgba(255,255,255,0.2); 
+            padding: 15px 40px; text-transform: uppercase; font-size: 0.9rem; 
+            letter-spacing: 5px; transition: 0.4s;
+            box-shadow: 0 0 15px rgba(255,255,255,0.05);
         }
+        .tg-link:hover { background: #fff; color: #000; box-shadow: 0 0 30px rgba(255,255,255,0.2); }
 
-        .tg-link:hover {
-            background-color: #fff;
-            color: #000;
-        }
-
-        /* СЕКЦИЯ 3: QR-КОД (Финальный акцент) */
+        /* QR-код */
         .qr-container {
-            width: 250px;
-            height: 250px;
-            padding: 15px;
-            background: #000;
-            border: 1px solid rgba(255,255,255,0.05);
+            width: 240px; height: 240px; padding: 10px;
+            background: #000; border: 1px solid rgba(255,255,255,0.1);
             position: relative;
-            margin-bottom: 30px;
         }
-        
-        /* Светящаяся рамка */
-        .qr-container::before {
-            content: ''; position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px;
-            border: 1px solid rgba(255,255,255,0.02); z-index: -1;
-        }
-
-        /* ИСПОЛЬЗУЕМ ТВОЙ QR-КОД КАК СТИЛЬНУЮ МАСКУ */
         .qr-mask {
-            width: 100%;
-            height: 100%;
-            /* Белая подложка */
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="white"/></svg>');
-            background-size: cover;
-            /* Твой QR-код как маска */
+            width: 100%; height: 100%;
+            background-color: #fff;
             -webkit-mask-image: url('image_2.png');
             mask-image: url('image_2.png');
-            -webkit-mask-size: contain; mask-size: contain;
-            -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
-            -webkit-mask-position: center; mask-position: center;
+            -webkit-mask-size: contain; mask-repeat: no-repeat; mask-position: center;
         }
-
         .qr-text {
-            font-family: 'Courier New', monospace;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #444;
+            font-family: 'Courier New', monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 4px; color: #333; margin-top: 20px;
         }
 
-        /* ФУТЕР (В самом низу, очень тусклый) */
-        .final-footer {
-            height: 15vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 2;
-            font-family: 'Courier New', monospace;
-            font-size: 0.6rem;
-            color: rgba(255,255,255,0.1);
-            letter-spacing: 4px;
+        footer {
+            height: 10vh; display: flex; align-items: center; justify-content: center;
+            font-family: monospace; font-size: 0.6rem; color: rgba(255,255,255,0.1);
+            letter-spacing: 5px;
         }
     </style>
 </head>
 <body>
-
-    <input type="checkbox" id="menu-toggle" style="display:none;">
 
     <div class="bg-pattern">
         <div class="bg-grid">
             <div class="bg-item">Erly life crisis</div><div class="bg-item">Erly life crisis</div>
             <div class="bg-item">Erly life crisis</div><div class="bg-item">Erly life crisis</div>
             <div class="bg-item">Erly life crisis</div><div class="bg-item">Erly life crisis</div>
-            <div class="bg-item">Erly life crisis</div><div class="bg-item">Erly life crisis</div>
-            <div class="bg-item">Erly life crisis</div><div class="bg-item">Erly life crisis</div>
         </div>
     </div>
 
     <div class="section">
-        <div class="hero-content">
-            <h1>Этот сайт создан<br>Roblox Music Events!</h1>
-            <p class="author">С помощью pr2rokl</p>
-            <div class="description-text">
-                Организация цифровых концертов и визуальных шоу. Разработка технических решений для погружения.
-            </div>
+        <div class="side-coords" style="top: 20%;">EST. 2026<br>40.7128 N</div>
+        <h1>Этот сайт создан<br>Roblox Music Events!</h1>
+        <p class="author">Production by pr2rokl</p>
+        <div class="description-text">
+            Цифровые архитекторы звука и пространства. Мы создаем события, которые остаются в памяти.
         </div>
+        <div class="decor-line" style="bottom: -50px;"></div>
     </div>
 
     <div class="section">
+        <div class="side-coords" style="left: 20px; right: auto;">RME // CORE<br>SYSTEM ACTIVE</div>
         <div class="rme-title">RME</div>
-        <a href="https://t.me/robloxhall2" class="tg-link" target="_blank">Telegram Channel</a>
+        <a href="https://t.me/robloxhall2" class="tg-link" target="_blank">Telegram</a>
+        <div class="decor-line" style="bottom: -50px;"></div>
     </div>
 
     <div class="section">
         <div class="qr-container">
             <div class="qr-mask"></div>
-        </div>
-        <div class="qr-text">Scan for channel</div>
+            </div>
+        <div class="qr-text">Scan for access</div>
     </div>
 
-    <div class="final-footer">
-        2026 ROBLOX MUSIC EVENTS
-    </div>
+    <footer>2026 ROBLOX MUSIC EVENTS</footer>
 
 </body>
 </html>
