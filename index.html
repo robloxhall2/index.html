@@ -14,7 +14,7 @@
             overflow-x: hidden;
         }
 
-        /* ДВИЖУЩИЙСЯ ФОН */
+        /* ДВИЖУЩИЙСЯ ФОН (МНОГО НАДПИСЕЙ) */
         .bg-layer {
             position: fixed;
             top: 0; left: 0;
@@ -26,90 +26,79 @@
         .bg-scroll {
             display: flex;
             flex-wrap: wrap;
-            width: 300%;
-            height: 300%;
+            width: 400%; /* Еще шире */
+            height: 400%;
             position: absolute;
-            top: -100%; left: -100%;
+            top: -150%; left: -150%;
             transform: rotate(-15deg);
-            animation: moveAround 60s linear infinite;
+            animation: moveAround 80s linear infinite;
         }
 
         .bg-text {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 900;
-            color: rgba(255, 255, 255, 0.12); /* Оптимальная яркость */
+            color: rgba(255, 255, 255, 0.12);
             text-transform: uppercase;
-            padding: 40px;
+            padding: 30px 60px;
             white-space: nowrap;
         }
 
         @keyframes moveAround {
-            0% { transform: rotate(-15deg) translate(0, 0); }
-            100% { transform: rotate(-15deg) translate(10%, 10%); }
+            0% { transform: translate(0, 0) rotate(-15deg); }
+            100% { transform: translate(10%, 10%) rotate(-15deg); }
         }
 
-        /* ЭФФЕКТ ГЛИТЧА ДЛЯ ЗАГОЛОВКОВ */
-        .glitch {
-            position: relative;
-            display: inline-block;
+        /* МЕНЮ (БУРГЕР) */
+        #menu-toggle { display: none; }
+        .menu-btn {
+            position: fixed; top: 20px; right: 20px;
+            width: 40px; height: 40px;
+            z-index: 200; cursor: pointer;
+            display: flex; flex-direction: column; justify-content: space-around;
+            background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); padding: 5px;
         }
-        .glitch:hover::before {
-            content: attr(data-text);
-            position: absolute; left: -2px;
-            text-shadow: 2px 0 #ff00c1;
-            background: #000; overflow: hidden;
-            animation: noise-1 0.2s infinite linear alternate-reverse;
+        .menu-btn span { width: 100%; height: 2px; background: #fff; transition: 0.3s; }
+        
+        .side-nav {
+            position: fixed; top: 0; right: -100%;
+            width: 250px; height: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 150; transition: 0.5s;
+            display: flex; flex-direction: column;
+            padding: 80px 30px; border-left: 1px solid rgba(255,255,255,0.1);
         }
-        .glitch:hover::after {
-            content: attr(data-text);
-            position: absolute; left: 2px;
-            text-shadow: -2px 0 #00fff9;
-            background: #000; overflow: hidden;
-            animation: noise-2 0.3s infinite linear alternate-reverse;
+        .side-nav a {
+            color: #fff; text-decoration: none; font-family: monospace;
+            font-size: 1rem; margin-bottom: 25px; letter-spacing: 2px;
+            text-transform: uppercase; border-bottom: 1px solid transparent;
+            width: fit-content; transition: 0.3s;
         }
-        @keyframes noise-1 { 0% { clip-path: inset(20% 0 50% 0); } 100% { clip-path: inset(40% 0 10% 0); } }
-        @keyframes noise-2 { 0% { clip-path: inset(10% 0 80% 0); } 100% { clip-path: inset(50% 0 30% 0); } }
+        .side-nav a:hover { border-bottom: 1px solid #fff; color: #888; }
+
+        #menu-toggle:checked ~ .side-nav { right: 0; }
 
         /* КОНТЕНТ */
         .container { position: relative; z-index: 10; }
-
         .section {
             height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
             text-align: center;
         }
 
-        /* ТЕХНИЧЕСКИЕ ДЕТАЛИ (заполнение пустоты) */
-        .scanline {
-            width: 80%; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            margin: 20px 0;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
-
-        .system-status {
-            font-family: monospace; font-size: 0.6rem;
-            color: #444; text-transform: uppercase; letter-spacing: 2px;
-            position: absolute; bottom: 20px;
-        }
-
+        .glitch { position: relative; display: inline-block; font-size: 2rem; letter-spacing: 5px; }
         .btn { 
             border: 1px solid #fff; padding: 12px 35px; 
             color: #fff; text-decoration: none; text-transform: uppercase;
             letter-spacing: 4px; font-size: 0.8rem; transition: 0.3s;
-            background: transparent;
         }
-        .btn:hover { background: #fff; color: #000; box-shadow: 0 0 20px #fff; }
+        .btn:hover { background: #fff; color: #000; }
 
         .qr-box {
             width: 240px; height: 240px;
             background: #050505; border: 1px solid #222;
             display: flex; align-items: center; justify-content: center;
-            position: relative;
         }
         .qr-img {
             width: 85%; height: 85%; background: #fff;
@@ -117,7 +106,7 @@
             mask: url('image_2.png') center/contain no-repeat;
         }
 
-        /* МУЗЫКА */
+        /* КНОПКА МУЗЫКИ */
         .m-btn {
             position: fixed; top: 20px; left: 20px; z-index: 100;
             background: rgba(0,0,0,0.8); border: 1px solid #fff;
@@ -125,11 +114,7 @@
             cursor: pointer; font-family: monospace;
         }
 
-        footer {
-            height: 20vh; display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            letter-spacing: 8px; font-weight: bold; color: #fff;
-        }
+        footer { height: 20vh; display: flex; align-items: center; justify-content: center; letter-spacing: 8px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -137,8 +122,27 @@
     <button class="m-btn" onclick="playMusic()" id="m-status">[ AUDIO: OFF ]</button>
     <audio id="track" loop><source src="Nettspend_-_you_ready_(SkySound.cc) (1).mp3" type="audio/mpeg"></audio>
 
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="menu-btn">
+        <span></span><span></span><span></span>
+    </label>
+    <nav class="side-nav">
+        <a href="https://t.me/robloxhall2">RME Channel</a>
+        <a href="https://t.me/pr2rokl">Admin Profile</a>
+        <a href="#">Contact Support</a>
+    </nav>
+
     <div class="bg-layer">
         <div class="bg-scroll">
+            <div class="bg-text">Erly life crisis</div><div class="bg-text">Erly life crisis</div>
+            <div class="bg-text">Erly life crisis</div><div class="bg-text">Erly life crisis</div>
+            <div class="bg-text">Erly life crisis</div><div class="bg-text">Erly life crisis</div>
+            <div class="bg-text">Erly life crisis</div><div class="bg-text">Erly life crisis</div>
+            <div class="bg-text">Erly life crisis</div><div class="bg-text">Erly life crisis</div>
+            <div class="bg-text">Erly life crisis</div><div class="bg-text">Erly life crisis</div>
+            <div class="bg-text">Erly life crisis</div><div class="bg-text">Erly life crisis</div>
+            <div class="bg-text">Erly life crisis</div><div class="bg-text">Erly life crisis</div>
+            <div class="bg-text">Erly life crisis</div><div class="bg-text">Erly life crisis</div>
             <div class="bg-text">Erly life crisis</div><div class="bg-text">Erly life crisis</div>
             <div class="bg-text">Erly life crisis</div><div class="bg-text">Erly life crisis</div>
             <div class="bg-text">Erly life crisis</div><div class="bg-text">Erly life crisis</div>
@@ -148,9 +152,7 @@
     <div class="container">
         <div class="section">
             <h1 class="glitch" data-text="ROBLOX MUSIC EVENTS">ROBLOX MUSIC EVENTS</h1>
-            <div class="scanline"></div>
-            <p style="color: #666; font-family: monospace; letter-spacing: 2px;">SECURED ACCESS // 2026</p>
-            <div class="system-status">SYS_STATUS: ACTIVE | ENCRYPTION: ON</div>
+            <p style="color: #666; font-family: monospace; letter-spacing: 2px; margin-top: 20px;">By pr2rokl</p>
         </div>
 
         <div class="section">
@@ -159,16 +161,11 @@
         </div>
 
         <div class="section">
-            <div class="qr-box">
-                <div class="qr-img"></div>
-            </div>
-            <p style="margin-top:25px; letter-spacing:5px; color:#444; font-family: monospace; font-size: 0.7rem;">DECRYPTING QR_CODE...</p>
+            <div class="qr-box"><div class="qr-img"></div></div>
+            <p style="margin-top:25px; letter-spacing:5px; color:#444; font-family: monospace; font-size: 0.7rem;">SCAN FOR ACCESS</p>
         </div>
 
-        <footer>
-            <div>2026 ROBLOX MUSIC EVENTS</div>
-            <div style="font-size: 0.5rem; letter-spacing: 2px; margin-top: 10px; opacity: 0.3;">DESIGNED BY PR2ROKL</div>
-        </footer>
+        <footer>2026 ROBLOX MUSIC EVENTS</footer>
     </div>
 
     <script>
