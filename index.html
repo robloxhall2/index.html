@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Roblox Music Events</title>
+    <style>
+        /* Общие настройки */
+        html, body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Times New Roman', serif;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            height: 220vh; /* Общая высота для скролла */
+            overflow-x: hidden;
+        }
+
+        /* Анимированный фон (Erly life crisis) */
+        .bg-pattern {
+            position: fixed;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            display: flex; flex-wrap: wrap; align-content: center; justify-content: center;
+            transform: rotate(-15deg); z-index: 1; pointer-events: none;
+            animation: move 120s linear infinite;
+        }
+        @keyframes move {
+            from { transform: rotate(-15deg) translateY(0); }
+            to { transform: rotate(-15deg) translateY(-20%); }
+        }
+        .bg-item {
+            font-size: 2.5rem; font-weight: 900;
+            color: rgba(255, 255, 255, 0.08); 
+            margin: 25px 50px; text-transform: uppercase; letter-spacing: 5px;
+        }
+
+        /* Кнопка Меню (CSS Hack) */
+        #menu-toggle { display: none; }
+        .menu-btn {
+            position: fixed; top: 20px; right: 20px;
+            width: 45px; height: 45px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0,0,0,0.8);
+            z-index: 3000; cursor: pointer;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .line { width: 18px; height: 1px; background: #fff; margin: 3px; transition: 0.3s; }
+        .side-menu {
+            position: fixed; top: 0; right: -100%;
+            width: 100%; height: 100%;
+            background: #000; z-index: 2000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+        }
+        #menu-toggle:checked ~ .side-menu { right: 0; }
+        #menu-toggle:checked ~ .menu-btn .line:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        #menu-toggle:checked ~ .menu-btn .line:nth-child(2) { transform: rotate(-45deg) translate(4px, -5px); }
+        .menu-link { font-size: 2rem; color: #fff; text-decoration: none; text-transform: uppercase; letter-spacing: 10px; font-family: 'Courier New', monospace; }
+
+        /* Центровка первого экрана */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            align-items: center; /* Центр по вертикали */
+            justify-content: center; /* Центр по горизонтали */
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .hero-content {
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        h1 { 
+            font-size: clamp(1.2rem, 5vw, 1.8rem); 
+            text-transform: uppercase; 
+            letter-spacing: 4px; 
+            font-weight: 400; 
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .author { 
+            font-size: 0.6rem; 
+            color: rgba(255,255,255,0.4); 
+            text-transform: uppercase; 
+            letter-spacing: 3px; 
+            margin-top: 10px;
+        }
+
+        .description-text {
+            max-width: 300px;
+            margin: 25px auto 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 1px;
+            line-height: 1.5;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+        }
+
+        /* Второй экран (RME) */
+        .rme-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .rme-title { font-size: 4rem; letter-spacing: 15px; font-weight: bold; margin-bottom: 20px; }
+        .tg-link { font-family: 'Courier New', monospace; color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.3); padding: 12px 25px; text-transform: uppercase; font-size: 0.7rem; }
+        
+        .info-block { margin-top: 30px; font-family: 'Courier New', monospace; text-transform: uppercase; }
+        .concert-date { font-size: 0.8rem; letter-spacing: 6px; color: rgba(255,255,255,0.7); }
+        .dev-status { font-size: 0.6rem; color: #444; letter-spacing: 2px; margin-top: 5px; }
+
+        /* Нижний копирайт */
+        .final-footer {
+            height: 20vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.2);
+            letter-spacing: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <input type="checkbox" id="menu-toggle">
+
+    <label for="menu-toggle" class="menu-btn">
+        <div class="line"></div>
+        <div class="line"></div>
+    </label>
+
+    <div class="side-menu">
+        <a href="https://t.me/Roretyu" class="menu-link" target="_blank">CONTACT</a>
+    </div>
+
+    <div class="bg-pattern">
+        <div class="bg-item">Erly life crisis</div>
+        <div class="bg-item">Erly life crisis</div>
+        <div class="bg-item">Erly life crisis</div>
+    </div>
+
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1>Этот сайт создан<br>Roblox Music Events!</h1>
+            <p class="author">С помощью pr2rokl</p>
+            <div class="description-text">
+                Организация цифровых концертов и визуальных шоу. Разработка технических решений для погружения.
+            </div>
+        </div>
+    </div>
+
+    <div class="rme-section">
+        <div class="rme-title">RME</div>
+        <a href="https://t.me/robloxhall2" class="tg-link" target="_blank">Telegram Channel</a>
+        
+        <div class="info-block">
+            <div class="concert-date">Concert XX.XX.26</div>
+            <div class="dev-status">Процесс: в разработке</div>
+        </div>
+    </div>
+
+    <div class="final-footer">
+        2026 ROBLOX MUSIC EVENTS
+    </div>
+
+</body>
+</html>
