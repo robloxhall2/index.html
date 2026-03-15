@@ -5,130 +5,142 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Roblox Music Events</title>
     <style>
-        html, body {
+        body, html {
             background-color: #000;
             color: #fff;
-            font-family: 'Times New Roman', Times, serif;
             margin: 0; padding: 0;
             width: 100%; height: 100%;
+            font-family: 'Times New Roman', serif;
             overflow-x: hidden;
         }
 
-        body { height: 320vh; position: relative; }
-
-        /* ФОНОВЫЙ ПАТТЕРН — СДЕЛАЛ ЕЩЕ ЯРЧЕ (0.15) */
-        .bg-pattern {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 1; pointer-events: none; overflow: hidden;
+        /* ДВИЖУЩИЙСЯ ФОН */
+        .bg-layer {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
         }
-        .bg-grid {
-            position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            display: flex; flex-wrap: wrap; align-content: space-around; justify-content: space-around;
+
+        .bg-scroll {
+            display: flex;
+            flex-wrap: wrap;
+            width: 300%; /* Увеличили площадь для движения */
+            height: 300%;
+            position: absolute;
+            top: -100%; left: -100%;
             transform: rotate(-15deg);
-            animation: diagonalMove 100s linear infinite;
-        }
-        .bg-item {
-            font-size: 2.8rem; font-weight: 900;
-            color: rgba(255, 255, 255, 0.15); /* ЯРКОСТЬ 15% — ТЕПЕРЬ ТОЧНО ВИДНО */
-            text-transform: uppercase; letter-spacing: 5px; margin: 25px 50px;
-        }
-        @keyframes diagonalMove {
-            from { transform: rotate(-15deg) translate(0, 0); }
-            to { transform: rotate(-15deg) translate(-10%, -10%); }
+            /* Анимация: 40 секунд, бесконечно */
+            animation: moveAround 40s linear infinite;
         }
 
-        /* МУЗЫКА */
-        .music-player {
-            position: fixed; top: 20px; left: 20px; z-index: 100;
-            background: rgba(255,255,255,0.1); padding: 10px 15px;
-            border: 1px solid rgba(255,255,255,0.3); border-radius: 5px;
-        }
-        .play-btn { cursor: pointer; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; font-family: monospace; }
-
-        /* Декор */
-        .decor-line {
-            position: absolute; left: 50%; transform: translateX(-50%);
-            width: 1px; height: 120px;
-            background: rgba(255,255,255,0.2);
-            z-index: 2;
+        .bg-text {
+            font-size: 3.5rem; /* Сделал крупнее */
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.18); /* Сделал еще ярче */
+            text-transform: uppercase;
+            padding: 40px;
+            white-space: nowrap;
         }
 
-        /* Секции */
+        @keyframes moveAround {
+            0% { transform: rotate(-15deg) translate(0, 0); }
+            100% { transform: rotate(-15deg) translate(10%, 10%); }
+        }
+
+        /* КОНТЕНТ */
+        .container {
+            position: relative;
+            z-index: 10;
+            height: 350vh; /* Высота для скролла */
+        }
+
         .section {
-            height: 100vh; display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            position: relative; z-index: 3; text-align: center; padding: 0 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
 
-        h1 { font-size: 1.8rem; text-transform: uppercase; letter-spacing: 6px; line-height: 1.3; margin: 0; }
-        .author { font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 4px; margin-top: 20px; font-family: monospace; }
+        h1 { font-size: 2rem; letter-spacing: 5px; text-transform: uppercase; margin: 0 20px; }
+        .author { font-size: 0.9rem; color: #aaa; margin-top: 15px; letter-spacing: 3px; }
         
-        .rme-title { font-size: 5rem; letter-spacing: 20px; font-weight: bold; margin-bottom: 30px; }
-        .tg-link { 
-            color: #fff; text-decoration: none; border: 1px solid #fff; 
-            padding: 15px 40px; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 4px;
+        .rme-logo { font-size: 6rem; font-weight: bold; letter-spacing: 15px; margin-bottom: 20px; }
+        .btn { 
+            border: 1px solid #fff; padding: 15px 40px; 
+            color: #fff; text-decoration: none; text-transform: uppercase;
+            letter-spacing: 3px; font-size: 0.8rem;
         }
 
-        .qr-container {
-            width: 250px; height: 250px; padding: 15px;
+        .qr-box {
+            width: 260px; height: 260px;
             background: #111; border: 1px solid #333;
+            display: flex; align-items: center; justify-content: center;
         }
-        .qr-mask {
-            width: 100%; height: 100%; background: #fff;
+        .qr-img {
+            width: 90%; height: 90%;
+            background: #fff;
             -webkit-mask: url('image_2.png') center/contain no-repeat;
             mask: url('image_2.png') center/contain no-repeat;
         }
 
-        /* ФУТЕР — ЯРКИЙ И ЧИТАЕМЫЙ */
         footer {
-            height: 15vh; display: flex; align-items: center; justify-content: center;
-            font-family: monospace; font-size: 0.9rem; 
-            color: #fff; /* ЧИСТО БЕЛЫЙ ЦВЕТ */
-            letter-spacing: 8px; font-weight: bold;
+            height: 20vh; display: flex; align-items: center; justify-content: center;
+            font-weight: bold; letter-spacing: 5px; color: #fff;
+        }
+
+        /* КНОПКА МУЗЫКИ */
+        .m-btn {
+            position: fixed; top: 20px; left: 20px; z-index: 100;
+            background: rgba(255,255,255,0.1); border: 1px solid #fff;
+            color: #fff; padding: 10px; font-size: 0.7rem; cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <div class="music-player">
-        <div id="status" class="play-btn" onclick="playM()">Music: OFF</div>
-        <audio id="m" loop><source src="music.mp3" type="audio/mpeg"></audio>
-    </div>
+    <button class="m-btn" onclick="playMusic()" id="m-status">MUSIC: OFF</button>
+    <audio id="track" loop><source src="music.mp3" type="audio/mpeg"></audio>
 
-    <div class="bg-pattern">
-        <div class="bg-grid">
-            <div class="bg-item">Erly life crisis</div><div class="bg-item">Erly life crisis</div>
-            <div class="bg-item">Erly life crisis</div><div class="bg-item">Erly life crisis</div>
-            <div class="bg-item">Erly life crisis</div><div class="bg-item">Erly life crisis</div>
-            <div class="bg-item">Erly life crisis</div><div class="bg-item">Erly life crisis</div>
+    <div class="bg-layer">
+        <div class="bg-scroll">
+            <div class="bg-text">Erly life crisis</div><div class="bg-text">Erly life crisis</div>
+            <div class="bg-text">Erly life crisis</div><div class="bg-text">Erly life crisis</div>
+            <div class="bg-text">Erly life crisis</div><div class="bg-text">Erly life crisis</div>
+            <div class="bg-text">Erly life crisis</div><div class="bg-text">Erly life crisis</div>
+            <div class="bg-text">Erly life crisis</div><div class="bg-text">Erly life crisis</div>
+            <div class="bg-text">Erly life crisis</div><div class="bg-text">Erly life crisis</div>
         </div>
     </div>
 
-    <div class="section">
-        <h1>Этот сайт создан<br>Roblox Music Events!</h1>
-        <p class="author">Production by pr2rokl</p>
-        <div class="decor-line" style="bottom: -60px;"></div>
-    </div>
+    <div class="container">
+        <div class="section">
+            <h1>Roblox Music Events</h1>
+            <p class="author">By pr2rokl</p>
+        </div>
 
-    <div class="section">
-        <div class="rme-title">RME</div>
-        <a href="https://t.me/robloxhall2" class="tg-link">Telegram</a>
-        <div class="decor-line" style="bottom: -60px;"></div>
-    </div>
+        <div class="section">
+            <div class="rme-logo">RME</div>
+            <a href="https://t.me/robloxhall2" class="btn">Telegram</a>
+        </div>
 
-    <div class="section">
-        <div class="qr-container"><div class="qr-mask"></div></div>
-        <p style="font-family:monospace; color:#888; letter-spacing:3px; margin-top:20px;">SCAN FOR ACCESS</p>
-    </div>
+        <div class="section">
+            <div class="qr-box"><div class="qr-img"></div></div>
+            <p style="margin-top:20px; letter-spacing:3px; color:#888;">SCAN FOR ACCESS</p>
+        </div>
 
-    <footer>2026 ROBLOX MUSIC EVENTS</footer>
+        <footer>2026 ROBLOX MUSIC EVENTS</footer>
+    </div>
 
     <script>
-        function playM() {
-            var a = document.getElementById("m");
-            var b = document.getElementById("status");
-            if (a.paused) { a.play(); b.innerHTML = "Music: ON"; } 
-            else { a.pause(); b.innerHTML = "Music: OFF"; }
+        function playMusic() {
+            var m = document.getElementById("track");
+            var s = document.getElementById("m-status");
+            if (m.paused) { m.play(); s.innerHTML = "MUSIC: ON"; }
+            else { m.pause(); s.innerHTML = "MUSIC: OFF"; }
         }
     </script>
 </body>
