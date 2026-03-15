@@ -14,9 +14,9 @@
             overflow-x: hidden;
         }
 
-        body { height: 310vh; position: relative; }
+        body { height: 320vh; position: relative; }
 
-        /* ФОНОВЫЙ ПАТТЕРН — СДЕЛАЛ ЯРЧЕ (0.08 вместо 0.03) */
+        /* ФОНОВЫЙ ПАТТЕРН — СДЕЛАЛ ЕЩЕ ЯРЧЕ (0.15) */
         .bg-pattern {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: 1; pointer-events: none; overflow: hidden;
@@ -25,38 +25,32 @@
             position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
             display: flex; flex-wrap: wrap; align-content: space-around; justify-content: space-around;
             transform: rotate(-15deg);
-            animation: diagonalMove 120s linear infinite;
+            animation: diagonalMove 100s linear infinite;
         }
         .bg-item {
-            font-size: 2.5rem; font-weight: 900;
-            color: rgba(255, 255, 255, 0.08); /* Теперь их точно видно */
-            text-transform: uppercase; letter-spacing: 5px; margin: 20px 40px;
+            font-size: 2.8rem; font-weight: 900;
+            color: rgba(255, 255, 255, 0.15); /* ЯРКОСТЬ 15% — ТЕПЕРЬ ТОЧНО ВИДНО */
+            text-transform: uppercase; letter-spacing: 5px; margin: 25px 50px;
         }
         @keyframes diagonalMove {
             from { transform: rotate(-15deg) translate(0, 0); }
             to { transform: rotate(-15deg) translate(-10%, -10%); }
         }
 
-        /* МУЗЫКАЛЬНЫЙ КОНТРОЛЛЕР */
+        /* МУЗЫКА */
         .music-player {
             position: fixed; top: 20px; left: 20px; z-index: 100;
-            display: flex; align-items: center; gap: 10px;
-            background: rgba(255,255,255,0.05); padding: 8px 15px;
-            border: 1px solid rgba(255,255,255,0.2); border-radius: 20px;
+            background: rgba(255,255,255,0.1); padding: 10px 15px;
+            border: 1px solid rgba(255,255,255,0.3); border-radius: 5px;
         }
-        .play-btn { cursor: pointer; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; }
+        .play-btn { cursor: pointer; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; font-family: monospace; }
 
         /* Декор */
         .decor-line {
             position: absolute; left: 50%; transform: translateX(-50%);
-            width: 1px; height: 100px;
-            background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.3), transparent);
+            width: 1px; height: 120px;
+            background: rgba(255,255,255,0.2);
             z-index: 2;
-        }
-        .side-coords {
-            position: absolute; right: 20px; font-family: monospace;
-            font-size: 0.65rem; color: rgba(255,255,255,0.4);
-            text-transform: uppercase; letter-spacing: 2px;
         }
 
         /* Секции */
@@ -66,67 +60,39 @@
             position: relative; z-index: 3; text-align: center; padding: 0 20px;
         }
 
-        h1 { 
-            font-size: clamp(1.8rem, 6vw, 2.5rem); 
-            text-transform: uppercase; letter-spacing: 8px; 
-            font-weight: 400; margin: 0; line-height: 1.2;
-        }
-        .author { 
-            font-size: 0.75rem; color: rgba(255,255,255,0.5); 
-            text-transform: uppercase; letter-spacing: 4px; margin-top: 15px;
-            font-family: 'Courier New', monospace;
-        }
-        .description-text {
-            max-width: 400px; margin: 30px auto 0;
-            font-family: 'Courier New', monospace; font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.5); letter-spacing: 1px; line-height: 1.6;
-        }
-
-        .rme-title { 
-            font-size: clamp(4.5rem, 15vw, 8rem); letter-spacing: 25px; 
-            font-weight: bold; margin-bottom: 25px;
-        }
+        h1 { font-size: 1.8rem; text-transform: uppercase; letter-spacing: 6px; line-height: 1.3; margin: 0; }
+        .author { font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 4px; margin-top: 20px; font-family: monospace; }
+        
+        .rme-title { font-size: 5rem; letter-spacing: 20px; font-weight: bold; margin-bottom: 30px; }
         .tg-link { 
-            font-family: 'Courier New', monospace; color: #fff; 
-            text-decoration: none; border: 1px solid rgba(255,255,255,0.4); 
-            padding: 15px 45px; text-transform: uppercase; font-size: 0.9rem; 
-            letter-spacing: 5px; transition: 0.4s;
+            color: #fff; text-decoration: none; border: 1px solid #fff; 
+            padding: 15px 40px; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 4px;
         }
-        .tg-link:hover { background: #fff; color: #000; }
 
         .qr-container {
-            width: 240px; height: 240px; padding: 10px;
-            background: #000; border: 1px solid rgba(255,255,255,0.15);
-            position: relative;
+            width: 250px; height: 250px; padding: 15px;
+            background: #111; border: 1px solid #333;
         }
         .qr-mask {
-            width: 100%; height: 100%;
-            background-color: #fff;
-            -webkit-mask-image: url('image_2.png');
-            mask-image: url('image_2.png');
-            -webkit-mask-size: contain; mask-repeat: no-repeat; mask-position: center;
-        }
-        .qr-text {
-            font-family: 'Courier New', monospace; font-size: 0.75rem;
-            text-transform: uppercase; letter-spacing: 4px; color: #666; margin-top: 20px;
+            width: 100%; height: 100%; background: #fff;
+            -webkit-mask: url('image_2.png') center/contain no-repeat;
+            mask: url('image_2.png') center/contain no-repeat;
         }
 
-        /* ФУТЕР — СДЕЛАЛ ЯРЧЕ */
+        /* ФУТЕР — ЯРКИЙ И ЧИТАЕМЫЙ */
         footer {
-            height: 10vh; display: flex; align-items: center; justify-content: center;
-            font-family: 'Courier New', monospace; font-size: 0.75rem; 
-            color: rgba(255,255,255,0.6); /* Теперь видно отлично */
-            letter-spacing: 6px; text-transform: uppercase;
+            height: 15vh; display: flex; align-items: center; justify-content: center;
+            font-family: monospace; font-size: 0.9rem; 
+            color: #fff; /* ЧИСТО БЕЛЫЙ ЦВЕТ */
+            letter-spacing: 8px; font-weight: bold;
         }
     </style>
 </head>
 <body>
 
     <div class="music-player">
-        <div id="play-status" class="play-btn" onclick="toggleMusic()">Music: OFF</div>
-        <audio id="bg-music" loop>
-            <source src="ССЫЛКА_НА_ТВОЮ_МУЗЫКУ.mp3" type="audio/mpeg">
-        </audio>
+        <div id="status" class="play-btn" onclick="playM()">Music: OFF</div>
+        <audio id="m" loop><source src="music.mp3" type="audio/mpeg"></audio>
     </div>
 
     <div class="bg-pattern">
@@ -134,48 +100,36 @@
             <div class="bg-item">Erly life crisis</div><div class="bg-item">Erly life crisis</div>
             <div class="bg-item">Erly life crisis</div><div class="bg-item">Erly life crisis</div>
             <div class="bg-item">Erly life crisis</div><div class="bg-item">Erly life crisis</div>
+            <div class="bg-item">Erly life crisis</div><div class="bg-item">Erly life crisis</div>
         </div>
     </div>
 
     <div class="section">
-        <div class="side-coords" style="top: 20%;">EST. 2026<br>RME SYSTEM</div>
         <h1>Этот сайт создан<br>Roblox Music Events!</h1>
         <p class="author">Production by pr2rokl</p>
-        <div class="description-text">
-            Цифровые архитекторы звука. Мы создаем события, которые меняют реальность.
-        </div>
-        <div class="decor-line" style="bottom: -50px;"></div>
+        <div class="decor-line" style="bottom: -60px;"></div>
     </div>
 
     <div class="section">
-        <div class="side-coords" style="left: 20px; right: auto;">RME // CORE<br>ONLINE</div>
         <div class="rme-title">RME</div>
-        <a href="https://t.me/robloxhall2" class="tg-link" target="_blank">Telegram</a>
-        <div class="decor-line" style="bottom: -50px;"></div>
+        <a href="https://t.me/robloxhall2" class="tg-link">Telegram</a>
+        <div class="decor-line" style="bottom: -60px;"></div>
     </div>
 
     <div class="section">
-        <div class="qr-container">
-            <div class="qr-mask"></div>
-        </div>
-        <div class="qr-text">Scan for access</div>
+        <div class="qr-container"><div class="qr-mask"></div></div>
+        <p style="font-family:monospace; color:#888; letter-spacing:3px; margin-top:20px;">SCAN FOR ACCESS</p>
     </div>
 
     <footer>2026 ROBLOX MUSIC EVENTS</footer>
 
     <script>
-        function toggleMusic() {
-            var audio = document.getElementById("bg-music");
-            var btn = document.getElementById("play-status");
-            if (audio.paused) {
-                audio.play();
-                btn.innerHTML = "Music: ON";
-            } else {
-                audio.pause();
-                btn.innerHTML = "Music: OFF";
-            }
+        function playM() {
+            var a = document.getElementById("m");
+            var b = document.getElementById("status");
+            if (a.paused) { a.play(); b.innerHTML = "Music: ON"; } 
+            else { a.pause(); b.innerHTML = "Music: OFF"; }
         }
     </script>
-
 </body>
 </html>
