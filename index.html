@@ -3,110 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Roblox Music Events</title>
+    <title>RME | Roblox Music Events</title>
     <style>
+        :root {
+            --accent: #fff;
+            --bg: #000;
+            --font-mono: 'Courier New', monospace;
+        }
+
         body, html {
-            background-color: #000;
-            color: #fff;
+            background-color: var(--bg);
+            color: var(--accent);
             margin: 0; padding: 0;
-            width: 100%; height: 100%;
+            width: 100%; min-height: 100%;
             font-family: 'Times New Roman', serif;
             overflow-x: hidden;
         }
 
-        /* ФОНОВЫЙ ТЕКСТ - ИСПРАВЛЕННЫЙ */
+        /* --- ФОНОВЫЙ ТЕКСТ (Адаптивный) --- */
         .bg-layer {
             position: fixed;
             top: 0; left: 0;
-            width: 100vw; height: 100vh;
+            width: 100%; height: 100%;
             z-index: 1;
             pointer-events: none;
             display: flex;
             flex-direction: column;
             justify-content: space-around;
             align-items: center;
-            opacity: 0.4; /* Настройка видимости текста на фоне */
+            opacity: 0.15;
         }
 
         .bg-text {
-            font-size: 2.2rem;
+            /* font-size подстраивается под ширину экрана */
+            font-size: clamp(2rem, 8vw, 5rem);
             font-weight: 900;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.2); 
-            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
+            color: transparent; 
+            -webkit-text-stroke: 1px var(--accent);
             white-space: nowrap;
-            transform: rotate(-15deg);
-            user-select: none;
-            animation: pulseFade 4s infinite ease-in-out;
+            transform: rotate(-12deg);
+            animation: pulse 5s infinite ease-in-out;
         }
 
-        @keyframes pulseFade {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 0.9; }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: rotate(-12deg) scale(1); }
+            50% { opacity: 0.8; transform: rotate(-10deg) scale(1.05); }
         }
 
-        /* МЕНЮ - ФИКС БАГА */
+        /* --- КНОПКА МУЗЫКИ --- */
+        .m-btn {
+            position: fixed; top: 20px; left: 20px;
+            z-index: 1001;
+            background: var(--bg); border: 1px solid var(--accent);
+            color: var(--accent); padding: 10px 15px;
+            font-family: var(--font-mono); font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* --- МЕНЮ (Универсальное) --- */
         #menu-toggle { display: none; }
         .menu-btn {
             position: fixed; top: 20px; right: 20px;
             width: 45px; height: 45px;
-            z-index: 1000; /* Максимальный приоритет */
-            cursor: pointer;
-            display: flex; flex-direction: column; justify-content: space-around;
-            background: #000; border: 2px solid #fff; padding: 8px;
-            box-sizing: border-box;
+            z-index: 1001; cursor: pointer;
+            background: var(--bg); border: 1px solid var(--accent);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
-        .menu-btn span { width: 100%; height: 2px; background: #fff; transition: 0.3s; }
-        
+        .menu-btn span { width: 25px; height: 1px; background: var(--accent); margin: 3px; transition: 0.3s; }
+
         .side-nav {
             position: fixed; top: 0; right: -100%;
-            width: 280px; height: 100%;
-            background: #000;
-            z-index: 999; 
-            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%; max-width: 350px; height: 100%;
+            background: rgba(0,0,0,0.98); z-index: 1000;
+            transition: 0.5s; padding: 100px 40px;
             display: flex; flex-direction: column;
-            padding: 100px 30px; border-left: 2px solid #fff;
-        }
-        .side-nav a, .side-nav label {
-            color: #fff; text-decoration: none; font-family: monospace;
-            font-size: 1rem; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px;
+            border-left: 1px solid var(--accent);
+            box-sizing: border-box;
         }
 
         #menu-toggle:checked ~ .side-nav { right: 0; }
-        #menu-toggle:checked ~ .menu-btn span:nth-child(1) { transform: translateY(11px) rotate(45deg); }
+        #menu-toggle:checked ~ .menu-btn span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         #menu-toggle:checked ~ .menu-btn span:nth-child(2) { opacity: 0; }
-        #menu-toggle:checked ~ .menu-btn span:nth-child(3) { transform: translateY(-11px) rotate(-45deg); }
+        #menu-toggle:checked ~ .menu-btn span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-        /* КОНТЕНТ */
-        .container { position: relative; z-index: 10; width: 100%; }
+        .side-nav a {
+            color: var(--accent); text-decoration: none;
+            font-family: var(--font-mono); font-size: 1.2rem;
+            margin-bottom: 25px; letter-spacing: 2px;
+        }
+
+        /* --- КОНТЕНТ --- */
+        .container {
+            position: relative; z-index: 10;
+            width: 100%; max-width: 1200px;
+            margin: 0 auto;
+        }
+
         .section {
             min-height: 100vh;
             display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            text-align: center; padding: 20px;
+            justify-content: center; align-items: center;
+            padding: 20px; box-sizing: border-box;
         }
 
-        /* CORE_LOG */
+        /* Терминал: на ПК шире, на телефоне на весь экран */
         .dev-terminal {
-            border: 2px solid #fff;
-            background: rgba(0, 0, 0, 0.9);
-            padding: 30px; width: 85%; max-width: 450px;
+            border: 1px solid var(--accent);
+            padding: 25px; width: 100%;
+            max-width: 500px; background: rgba(0,0,0,0.8);
             text-align: left; position: relative;
         }
-        .dev-terminal::before { content: "CORE_LOG"; position: absolute; top: -14px; left: 20px; background: #000; padding: 0 10px; font-family: monospace; font-size: 0.8rem; border: 1px solid #fff; }
 
-        h1 { font-size: 4.5rem; letter-spacing: 20px; margin: 0; font-weight: bold; }
-        
-        /* КНОПКИ */
-        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; max-width: 400px; margin-top: 35px; }
-        .btn { border: 2px solid #fff; padding: 18px; color: #fff; text-decoration: none; text-transform: uppercase; font-size: 0.8rem; font-family: monospace; transition: 0.3s; text-align: center; }
-        .btn:hover { background: #fff; color: #000; }
-        .btn-full { grid-column: span 2; }
+        h1 { 
+            font-size: clamp(3.5rem, 18vw, 8rem); 
+            margin: 0; letter-spacing: clamp(10px, 3vw, 25px); 
+        }
 
-        .info-block { display: none; margin-top: 20px; font-family: monospace; font-size: 0.85rem; line-height: 1.7; }
-        #about-toggle:checked ~ .about-content { display: block; }
+        /* Сетка кнопок: 2 колонки на ПК, 1 на телефоне */
+        .btn-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px; width: 100%; max-width: 500px;
+            margin-top: 30px;
+        }
 
-        .m-btn { position: fixed; top: 20px; left: 20px; z-index: 1000; background: #000; border: 2px solid #fff; color: #fff; padding: 12px 18px; font-size: 0.7rem; font-family: monospace; cursor: pointer; }
+        .btn {
+            border: 1px solid var(--accent); padding: 18px;
+            color: var(--accent); text-decoration: none;
+            font-family: var(--font-mono); font-size: 0.8rem;
+            text-align: center; transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn:hover { background: var(--accent); color: var(--bg); }
+
+        /* --- MEDIA QUERIES (Адаптация) --- */
+        @media (max-width: 600px) {
+            .btn-grid {
+                grid-template-columns: 1fr; /* Одна колонка на мобильных */
+            }
+            .btn-full { grid-column: auto; }
+            
+            .dev-terminal {
+                padding: 15px;
+            }
+
+            .m-btn {
+                padding: 8px 10px;
+                font-size: 10px;
+            }
+        }
+
+        /* Для очень больших экранов */
+        @media (min-width: 1200px) {
+            .dev-terminal { max-width: 650px; }
+        }
     </style>
 </head>
 <body>
@@ -118,44 +170,39 @@
     <label for="menu-toggle" class="menu-btn"><span></span><span></span><span></span></label>
     
     <nav class="side-nav">
-        <a href="https://t.me/robloxhall2">RME Channel</a>
-        <a href="https://t.me/pr2rokl">Admin 1</a>
-        <a href="https://t.me/Roretyu">Admin 2</a>
-        <input type="checkbox" id="about-toggle" style="display:none;">
-        <label for="about-toggle" style="cursor:pointer;">О НАС</label>
+        <a href="https://t.me/robloxhall2" onclick="closeMenu()">RME CHANNEL</a>
+        <a href="https://t.me/pr2rokl" onclick="closeMenu()">ADMIN 1</a>
+        <a href="https://t.me/Roretyu" onclick="closeMenu()">ADMIN 2</a>
     </nav>
 
     <div class="bg-layer">
         <div class="bg-text">Early life crisis</div>
-        <div class="bg-text">Early life crisis</div>
-        <div class="bg-text">Early life crisis</div>
+        <div class="bg-text">RME STUDIO</div>
         <div class="bg-text">Early life crisis</div>
     </div>
 
     <div class="container">
         <div class="section">
             <div class="dev-terminal">
-                <div style="font-family: monospace; font-size: 0.9rem; margin-bottom: 12px; border-bottom: 1px solid #fff; padding-bottom: 8px;">
-                    STATUS: <span style="color:#0f0">ACTIVE</span>
+                <div style="font-family: var(--font-mono); border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px; font-size: 0.8rem;">
+                    > SYSTEM STATUS: ONLINE
                 </div>
-                <div style="font-family: monospace; font-size: 0.8rem;">
-                    UNIT: ROBLOX MUSIC EVENTS<br>
-                    REGION: RUSSIA_FEDERATION<br>
-                    RANK: LEADING_STUDIO // 01
-                </div>
-                <div class="info-block about-content">
-                    ROBLOX MUSIC EVENTS — это амбициозная команда, объединившая специалистов из разных регионов России. Мы создаем уникальные виртуальные шоу на платформе Roblox.
+                <div style="font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6;">
+                    [INFO] UNIT: ROBLOX MUSIC EVENTS<br>
+                    [INFO] TYPE: VIRTUAL PRODUCTION<br>
+                    [INFO] AREA: RU_REGION
                 </div>
             </div>
         </div>
 
         <div class="section">
             <h1>RME</h1>
-            <div style="font-family: monospace; font-size: 0.9rem; letter-spacing: 10px;">DIGITAL MUSIC EVENTS</div>
+            <p style="font-family: var(--font-mono); letter-spacing: 5px; font-size: 0.7rem; color: #888;">// DIGITAL CONCERT EXPERIENCE</p>
+            
             <div class="btn-grid">
                 <a href="https://t.me/robloxhall2" class="btn">Telegram</a>
-                <a href="https://t.me/pr2rokl" class="btn">Admin</a>
-                <a href="https://t.me/Roretyu" class="btn btn-full">Admin 2 // Roretyu</a>
+                <a href="https://t.me/pr2rokl" class="btn">Admin 1</a>
+                <a href="https://t.me/Roretyu" class="btn" style="grid-column: 1 / -1;">Admin 2 // Roretyu</a>
             </div>
         </div>
     </div>
@@ -166,6 +213,10 @@
             var s = document.getElementById("m-status");
             if (m.paused) { m.play(); s.innerHTML = "[ AUDIO: ON ]"; }
             else { m.pause(); s.innerHTML = "[ AUDIO: OFF ]"; }
+        }
+
+        function closeMenu() {
+            document.getElementById("menu-toggle").checked = false;
         }
     </script>
 </body>
