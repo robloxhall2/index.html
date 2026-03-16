@@ -27,7 +27,7 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0; display: flex; flex-direction: column;
             justify-content: space-between; pointer-events: none;
-            opacity: 0.1; 
+            opacity: 0.08; 
         }
         .bg-row {
             display: flex; white-space: nowrap; font-size: 10vh;
@@ -35,72 +35,51 @@
         }
         .bg-row:nth-child(even) { transform: translateX(-15%); color: transparent; -webkit-text-stroke: 1px var(--white); }
 
-        .container { 
-            position: relative; z-index: 10; 
-            width: 100%; max-width: 1200px; 
-            margin: 0 auto; padding: 0 15px; 
-            box-sizing: border-box; 
-        }
-        
-        .section { 
-            min-height: 90vh; 
-            display: flex; flex-direction: column; 
-            justify-content: center; align-items: center; 
-            position: relative; 
-            padding: 50px 0;
-        }
+        .container { position: relative; z-index: 10; width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 15px; box-sizing: border-box; }
+        .section { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; padding: 40px 0; }
 
         .reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* --- ВЕРТИКАЛЬНОЕ РАЗДЕЛЕНИЕ --- */
+        /* --- ТЕХНИЧЕСКИЕ РАЗДЕЛИТЕЛИ --- */
         .ui-divider {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 40px 0;
             width: 100%;
+            margin: 20px 0;
         }
-
         .line {
             width: 1px;
-            height: clamp(100px, 20vh, 250px);
+            height: clamp(80px, 15vh, 200px);
             background: linear-gradient(to bottom, var(--white), transparent);
             position: relative;
         }
+        /* Зеркальная линия (снизу вверх) */
+        .line.bottom {
+            background: linear-gradient(to top, var(--white), transparent);
+        }
 
-        /* Технические метки по бокам от линии */
         .line::after {
-            content: "SEC_04 // DATA_FLOW";
+            content: attr(data-label);
             position: absolute;
             left: 15px; top: 50%;
             transform: translateY(-50%);
             font-family: var(--font-mono);
-            font-size: 9px;
+            font-size: 8px;
             letter-spacing: 2px;
             color: var(--gray);
             white-space: nowrap;
         }
 
-        .line::before {
-            content: "[ + ]";
-            position: absolute;
-            left: -13px; top: -20px;
-            font-family: var(--font-mono);
-            font-size: 10px;
-            color: var(--white);
-        }
-
         /* --- ТЕРМИНАЛ --- */
         .dev-terminal {
             border: 1px solid var(--white);
-            padding: 30px;
+            padding: 25px;
             width: 100%;
-            max-width: 450px;
+            max-width: 420px;
             background: var(--black);
             text-align: left;
-            position: relative;
-            box-shadow: 20px 20px 0px rgba(255,255,255,0.05); /* Тень в стиле брутализма */
         }
 
         /* --- ЕВЕНТ --- */
@@ -111,35 +90,30 @@
             background: var(--black);
             cursor: pointer;
             overflow: hidden;
-            transition: 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+            transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
         }
-        .event-wrapper:hover { transform: scale(1.02); }
-        .event-placeholder { padding: 80px 20px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 5px; }
+        .event-placeholder { padding: 80px 20px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 4px; }
         .event-content { display: none; opacity: 0; }
         .event-wrapper.opened .event-placeholder { display: none; }
-        .event-wrapper.opened .event-content { display: block; opacity: 1; animation: fadeIn 0.5s forwards; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
+        .event-wrapper.opened .event-content { display: block; opacity: 1; }
         .main-poster { width: 100%; height: auto; display: block; filter: grayscale(1); }
 
-        /* --- КНОПКИ --- */
-        h1 { font-size: clamp(5rem, 25vw, 12rem); font-weight: 900; margin: 0; letter-spacing: -8px; }
-        .btn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; max-width: 600px; margin-top: 40px; }
-        .btn { border: 1px solid var(--white); padding: 22px; color: var(--white); text-decoration: none; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; text-align: center; transition: 0.3s; }
+        /* --- UI НИЗ --- */
+        h1 { font-size: clamp(5rem, 22vw, 11rem); font-weight: 900; margin: 0; letter-spacing: -6px; }
+        .btn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; max-width: 550px; margin-top: 20px; }
+        .btn { border: 1px solid var(--white); padding: 20px; color: var(--white); text-decoration: none; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; text-align: center; transition: 0.3s; }
         .btn:hover { background: var(--white); color: var(--black); }
 
         .m-btn {
-            position: fixed; top: 25px; left: 25px; z-index: 1000;
+            position: fixed; top: 20px; left: 20px; z-index: 1000;
             background: var(--black); border: 1px solid var(--white);
-            color: var(--white); padding: 10px 18px; font-family: var(--font-mono); font-size: 10px;
+            color: var(--white); padding: 10px 15px; font-family: var(--font-mono); font-size: 10px; cursor: pointer;
         }
 
         @media (max-width: 600px) {
             .btn-grid { grid-template-columns: 1fr; }
-            .line::after { display: none; } /* Убираем текст на мобилках, чтобы не теснил */
-            .line { height: 120px; }
-            .dev-terminal { box-shadow: none; }
+            .line::after { display: none; }
+            .section { min-height: 70vh; }
         }
     </style>
 </head>
@@ -158,33 +132,35 @@
         
         <div class="section">
             <div class="dev-terminal reveal">
-                <div style="font-family: var(--font-mono); font-size: 10px; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between;">
-                    <span>[ RME_TERMINAL_V4 ]</span>
+                <div style="font-family: var(--font-mono); font-size: 9px; border-bottom: 1px solid #222; padding-bottom: 8px; margin-bottom: 12px; display: flex; justify-content: space-between;">
+                    <span>> RME_CORE_SYSTEM</span>
                     <span id="header-clock">00:00</span>
                 </div>
-                <div style="font-family: var(--font-mono); font-size: 13px; line-height: 1.6;">
-                    > SYSTEM_INIT: SUCCESS<br>
-                    > TARGET_LOAD: IMG_319.jpg<br>
-                    > ENCRYPTION: ACTIVE<br>
-                    > <span style="background: white; color: black; padding: 0 5px;">READY FOR DEPLOYMENT</span>
+                <div style="font-family: var(--font-mono); font-size: 12px; line-height: 1.5;">
+                    STATUS: ONLINE<br>
+                    TARGET: NETTSPEND_319<br>
+                    LOCATION: ROBLOX_VIRTUAL
                 </div>
             </div>
 
             <div class="ui-divider reveal">
-                <div class="line"></div>
+                <div class="line" data-label="DATA_LINK_START"></div>
             </div>
 
             <div class="event-wrapper reveal" id="eventBox" onclick="openEvent()">
                 <div class="event-placeholder">
-                    <span>[ DECRYPT_POSTER_319 ]</span>
+                    <span>[ DECRYPT_FILE ]</span>
                 </div>
                 <div class="event-content">
                     <img src="IMG_20260316_175210_319.jpg" alt="Poster" class="main-poster">
-                    <div style="padding: 20px; text-align: left; border-top: 1px solid #fff; background: #000;">
-                        <p style="font-family: var(--font-mono); font-size: 14px; margin: 0; letter-spacing: 2px;">NETTSPEND // CONCERT</p>
-                        <p style="font-family: var(--font-mono); font-size: 10px; color: var(--gray); margin-top: 8px;">YEAR: 2026 | HUB: ROBLOX_MUSIC</p>
+                    <div style="padding: 15px; text-align: left; border-top: 1px solid #fff; background: #000;">
+                        <p style="font-family: var(--font-mono); font-size: 12px; margin: 0;">NETTSPEND // EARLY LIFE CRISIS</p>
                     </div>
                 </div>
+            </div>
+
+            <div class="ui-divider reveal">
+                <div class="line bottom" data-label="TERMINAL_END_LINK"></div>
             </div>
         </div>
 
@@ -200,21 +176,18 @@
 
     <script>
         function openEvent() { document.getElementById('eventBox').classList.add('opened'); }
-        
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) { reveals[i].classList.add("active"); }
+                if (elementTop < windowHeight - 50) { reveals[i].classList.add("active"); }
             }
         }
-
         function updateClock() {
             const now = new Date();
             document.getElementById('header-clock').innerText = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
         }
-
         window.addEventListener("scroll", reveal);
         window.addEventListener("load", () => { reveal(); updateClock(); });
         setInterval(updateClock, 1000);
