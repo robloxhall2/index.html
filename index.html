@@ -19,48 +19,74 @@
             width: 100%; min-height: 100%;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            /* Убирает системное выделение при долгом нажатии на мобилках */
             -webkit-user-select: none;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* --- ФОНОВАЯ НАДПИСЬ --- */
+        /* --- ФОНОВАЯ НАДПИСЬ ПЛОТНО --- */
         .bg-fixed {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0; display: flex; flex-direction: column;
             justify-content: space-between; pointer-events: none;
-            opacity: 0.1; 
+            opacity: 0.12; 
         }
         .bg-row {
             display: flex; white-space: nowrap; font-size: 10vh;
             font-weight: 900; line-height: 0.8; text-transform: uppercase;
-            letter-spacing: -2px;
         }
-        .bg-row:nth-child(even) { transform: translateX(-20%); color: transparent; -webkit-text-stroke: 1px var(--white); }
-        .bg-row:nth-child(odd) { transform: translateX(10%); }
+        .bg-row:nth-child(even) { transform: translateX(-15%); color: transparent; -webkit-text-stroke: 1px var(--white); }
+        .bg-row:nth-child(odd) { transform: translateX(5%); }
 
         /* --- КОНТЕНТ --- */
         .container { position: relative; z-index: 10; width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 15px; box-sizing: border-box; }
-        .section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 0; }
+        .section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
 
-        .reveal { opacity: 0; transform: translateY(15px); transition: all 0.6s ease-out; }
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* --- ИНТЕРАКТИВНЫЙ ЕВЕНТ (АДАПТИВ) --- */
+        /* --- ТОТ САМЫЙ ТЕРМИНАЛ --- */
+        .dev-terminal {
+            border: 1px solid var(--white);
+            padding: 30px;
+            width: 100%;
+            max-width: 450px;
+            background: rgba(0,0,0,0.9);
+            text-align: left;
+            backdrop-filter: blur(10px);
+            box-sizing: border-box;
+        }
+
+        .terminal-header {
+            font-family: var(--font-mono);
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .terminal-body {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* --- ИНТЕРАКТИВНЫЙ ЕВЕНТ --- */
         .event-wrapper {
             width: 100%;
-            max-width: 420px; /* Для ПК */
+            max-width: 450px;
             border: 1px solid var(--white);
             background: var(--black);
             cursor: pointer;
             overflow: hidden;
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
             position: relative;
         }
 
         .event-placeholder {
-            padding: clamp(60px, 15vh, 100px) 20px;
+            padding: 80px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -68,71 +94,46 @@
 
         .event-placeholder span {
             font-family: var(--font-mono);
-            font-size: 10px;
-            letter-spacing: 3px;
+            font-size: 11px;
+            letter-spacing: 5px;
             border: 1px solid var(--white);
-            padding: 12px 20px;
-            background: var(--black);
+            padding: 10px 15px;
         }
 
         .event-content {
-            display: none; /* Скрыто до активации */
+            display: none;
             opacity: 0;
             transform: translateY(10px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transition: 0.8s ease;
         }
 
-        /* Состояние открытия */
-        .event-wrapper.opened {
-            max-width: 550px; /* Немного шире при открытии */
-        }
+        .event-wrapper.opened .event-placeholder { display: none; }
+        .event-wrapper.opened .event-content { display: block; opacity: 1; transform: translateY(0); }
 
-        .event-wrapper.opened .event-placeholder {
-            display: none;
-        }
-
-        .event-wrapper.opened .event-content {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .main-poster {
-            width: 100%;
-            height: auto;
-            display: block;
-            filter: grayscale(1);
-        }
+        .main-poster { width: 100%; height: auto; display: block; filter: grayscale(1); }
 
         .poster-info {
             padding: 20px;
             text-align: left;
             border-top: 1px solid var(--white);
-            background: var(--black);
         }
 
         /* --- UI --- */
         h1 { font-size: clamp(3.5rem, 22vw, 10rem); font-weight: 900; margin: 0; letter-spacing: -6px; line-height: 0.8; }
-        
         .btn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; max-width: 500px; margin-top: 30px; }
-        .btn { border: 1px solid var(--white); padding: clamp(15px, 4vw, 20px); color: var(--white); text-decoration: none; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; transition: 0.3s; text-align: center; }
-        
-        @media (hover: hover) { .btn:hover { background: var(--white); color: var(--black); } }
-        .btn:active { background: var(--white); color: var(--black); } /* Для телефона */
+        .btn { border: 1px solid var(--white); padding: 18px; color: var(--white); text-decoration: none; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; transition: 0.3s; text-align: center;}
+        .btn:hover { background: var(--white); color: var(--black); }
 
         .m-btn {
-            position: fixed; top: 15px; left: 15px; z-index: 1000;
+            position: fixed; top: 20px; left: 20px; z-index: 1000;
             background: var(--black); border: 1px solid var(--white);
-            color: var(--white); padding: 8px 12px; font-family: var(--font-mono);
-            font-size: 9px; cursor: pointer;
+            color: var(--white); padding: 10px 15px; font-family: var(--font-mono);
+            font-size: 10px; cursor: pointer;
         }
 
-        /* Мобильная адаптация */
         @media (max-width: 600px) {
-            .event-wrapper { max-width: 100%; }
             .btn-grid { grid-template-columns: 1fr; }
             .bg-row { font-size: 12vw; }
-            .section { padding: 20px 0; }
         }
     </style>
 </head>
@@ -152,23 +153,30 @@
 
     <div class="container">
         <div class="section">
-            <div class="reveal active" style="border-left: 2px solid #fff; padding: 10px 0 10px 20px; text-align: left; width: 100%; max-width: 400px; box-sizing: border-box;">
-                <p style="font-family: var(--font-mono); font-size: 10px; color: var(--gray); margin: 0 0 5px 0;">[ SYSTEM_ACCESS ]</p>
-                <p style="font-family: var(--font-mono); margin: 0; font-size: 13px;">FILE: IMG_319.JPG</p>
-                <p style="font-family: var(--font-mono); margin: 0; font-size: 13px;">STATUS: ENCRYPTED</p>
+            <div class="dev-terminal reveal">
+                <div class="terminal-header">
+                    <span>> SYSTEM_CONNECTED</span>
+                    <span id="header-clock">00:00</span>
+                </div>
+                <div class="terminal-body">
+                    [STATUS] ACTIVE<br>
+                    [UNIT] ROBLOX_MUSIC_EVENTS<br>
+                    [VER] 2.0.4_STABLE<br>
+                    [DATA] IMG_20260316_175210_319.jpg
+                </div>
             </div>
         </div>
 
         <div class="section">
-            <div class="event-wrapper reveal" id="eventBox" onclick="openEvent()" ontouchstart="">
+            <div class="event-wrapper reveal" id="eventBox" onclick="openEvent()">
                 <div class="event-placeholder">
                     <span>DECRYPT_DATA</span>
                 </div>
                 <div class="event-content">
                     <img src="IMG_20260316_175210_319.jpg" alt="Concert Poster" class="main-poster">
                     <div class="poster-info">
-                        <p style="font-family: var(--font-mono); font-size: 13px; margin: 0; letter-spacing: 1px;">NETTSPEND // CONCERT</p>
-                        <p style="font-family: var(--font-mono); font-size: 9px; color: var(--gray); margin: 5px 0 0 0;">ALBUM: EARLY LIFE CRISIS // 2026</p>
+                        <p style="font-family: var(--font-mono); font-size: 14px; margin: 0;">NETTSPEND // CONCERT</p>
+                        <p style="font-family: var(--font-mono); font-size: 10px; color: var(--gray); margin-top: 5px;">ALBUM: EARLY LIFE CRISIS // 2026</p>
                     </div>
                 </div>
             </div>
@@ -186,10 +194,7 @@
 
     <script>
         function openEvent() {
-            const box = document.getElementById('eventBox');
-            box.classList.add('opened');
-            // Принудительно вызываем проверку появления, чтобы постер был виден
-            reveal(); 
+            document.getElementById('eventBox').classList.add('opened');
         }
 
         function reveal() {
@@ -197,30 +202,26 @@
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
-                if (elementTop < windowHeight - 50) { 
-                    reveals[i].classList.add("active"); 
-                }
+                if (elementTop < windowHeight - 100) { reveals[i].classList.add("active"); }
             }
         }
-        
+
+        function updateClock() {
+            const now = new Date();
+            const time = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('header-clock').innerText = time;
+        }
+
         window.addEventListener("scroll", reveal);
-        window.addEventListener("load", reveal);
+        window.addEventListener("load", () => { reveal(); updateClock(); });
         window.addEventListener("touchmove", reveal);
+        setInterval(updateClock, 1000);
 
         function playMusic() {
             var m = document.getElementById("track");
             var s = document.getElementById("m-status");
-            if (m.paused) { 
-                m.play(); 
-                s.innerHTML = "AUDIO // ON"; 
-                s.style.background = "#fff"; 
-                s.style.color = "#000"; 
-            } else { 
-                m.pause(); 
-                s.innerHTML = "AUDIO // OFF"; 
-                s.style.background = "#000"; 
-                s.style.color = "#fff"; 
-            }
+            if (m.paused) { m.play(); s.innerHTML = "AUDIO // ON"; s.style.background = "#fff"; s.style.color = "#000"; }
+            else { m.pause(); s.innerHTML = "AUDIO // OFF"; s.style.background = "#000"; s.style.color = "#fff"; }
         }
     </script>
 </body>
