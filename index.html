@@ -14,7 +14,7 @@
             overflow-x: hidden;
         }
 
-        /* ДВИЖУЩИЙСЯ ФОН (МНОГО НАДПИСЕЙ) */
+        /* ДВИЖУЩИЙСЯ ФОН — СДЕЛАЛ ЯРЧЕ (0.15) */
         .bg-layer {
             position: fixed;
             top: 0; left: 0;
@@ -26,20 +26,21 @@
         .bg-scroll {
             display: flex;
             flex-wrap: wrap;
-            width: 400%; /* Еще шире */
-            height: 400%;
+            width: 300%;
+            height: 300%;
             position: absolute;
-            top: -150%; left: -150%;
+            top: -100%; left: -100%;
             transform: rotate(-15deg);
-            animation: moveAround 80s linear infinite;
+            /* Ускорил движение: 60 секунд вместо 80 */
+            animation: moveAround 60s linear infinite;
         }
 
         .bg-text {
-            font-size: 2.5rem;
+            font-size: 3.2rem; /* Сделал чуть крупнее */
             font-weight: 900;
-            color: rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.15); /* ЯРКОСТЬ 15% — ТЕПЕРЬ ВИДНО ОЧЕНЬ ХОРОШО */
             text-transform: uppercase;
-            padding: 30px 60px;
+            padding: 40px;
             white-space: nowrap;
         }
 
@@ -52,69 +53,91 @@
         #menu-toggle { display: none; }
         .menu-btn {
             position: fixed; top: 20px; right: 20px;
-            width: 40px; height: 40px;
+            width: 45px; height: 45px;
             z-index: 200; cursor: pointer;
             display: flex; flex-direction: column; justify-content: space-around;
-            background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); padding: 5px;
+            background: rgba(0,0,0,0.8); border: 2px solid rgba(255,255,255,0.3); padding: 7px;
+            border-radius: 5px;
         }
-        .menu-btn span { width: 100%; height: 2px; background: #fff; transition: 0.3s; }
+        .menu-btn span { width: 100%; height: 3px; background: #fff; transition: 0.3s; }
         
         .side-nav {
             position: fixed; top: 0; right: -100%;
-            width: 250px; height: 100%;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
+            width: 280px; height: 100%;
+            background: rgba(5, 5, 5, 0.98);
+            backdrop-filter: blur(15px);
             z-index: 150; transition: 0.5s;
             display: flex; flex-direction: column;
-            padding: 80px 30px; border-left: 1px solid rgba(255,255,255,0.1);
+            padding: 90px 40px; border-left: 2px solid rgba(255,255,255,0.2);
         }
-        .side-nav a {
+        .side-nav a, .side-nav label {
             color: #fff; text-decoration: none; font-family: monospace;
-            font-size: 1rem; margin-bottom: 25px; letter-spacing: 2px;
-            text-transform: uppercase; border-bottom: 1px solid transparent;
-            width: fit-content; transition: 0.3s;
+            font-size: 1.1rem; margin-bottom: 30px; letter-spacing: 3px;
+            text-transform: uppercase; border-bottom: 2px solid transparent;
+            width: fit-content; transition: 0.3s; cursor: pointer;
         }
-        .side-nav a:hover { border-bottom: 1px solid #fff; color: #888; }
+        .side-nav a:hover, .side-nav label:hover { border-bottom: 2px solid #fff; color: #aaa; }
 
         #menu-toggle:checked ~ .side-nav { right: 0; }
+        #menu-toggle:checked ~ .menu-btn span:nth-child(1) { transform: translateY(13px) rotate(45deg); }
+        #menu-toggle:checked ~ .menu-btn span:nth-child(2) { opacity: 0; }
+        #menu-toggle:checked ~ .menu-btn span:nth-child(3) { transform: translateY(-13px) rotate(-45deg); }
 
         /* КОНТЕНТ */
-        .container { position: relative; z-index: 10; }
+        .container { position: relative; z-index: 10; height: 350vh; }
         .section {
             height: 100vh;
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
             text-align: center;
+            padding: 0 20px;
         }
 
-        .glitch { position: relative; display: inline-block; font-size: 2rem; letter-spacing: 5px; }
+        .glitch { position: relative; display: inline-block; font-size: 2.2rem; letter-spacing: 6px; }
         .btn { 
-            border: 1px solid #fff; padding: 12px 35px; 
+            border: 2px solid #fff; padding: 15px 45px; 
             color: #fff; text-decoration: none; text-transform: uppercase;
-            letter-spacing: 4px; font-size: 0.8rem; transition: 0.3s;
+            letter-spacing: 5px; font-size: 0.9rem; transition: 0.3s;
+            background: transparent;
         }
-        .btn:hover { background: #fff; color: #000; }
+        .btn:hover { background: #fff; color: #000; box-shadow: 0 0 25px #fff; }
 
         .qr-box {
-            width: 240px; height: 240px;
-            background: #050505; border: 1px solid #222;
+            width: 260px; height: 260px;
+            background: #050505; border: 2px solid #333;
             display: flex; align-items: center; justify-content: center;
+            position: relative;
         }
         .qr-img {
             width: 85%; height: 85%; background: #fff;
-            -webkit-mask: url('image_2.png') center/contain no-repeat;
-            mask: url('image_2.png') center/contain no-repeat;
+            /* ПРАВИЛЬНОЕ ИМЯ ЗДЕСЬ */
+            -webkit-mask: url('Screenshot_20260316_075541_Google.jpg') center/contain no-repeat;
+            mask: url('Screenshot_20260316_075541_Google.jpg') center/contain no-repeat;
         }
 
         /* КНОПКА МУЗЫКИ */
         .m-btn {
             position: fixed; top: 20px; left: 20px; z-index: 100;
-            background: rgba(0,0,0,0.8); border: 1px solid #fff;
-            color: #fff; padding: 8px 15px; font-size: 0.6rem; 
-            cursor: pointer; font-family: monospace;
+            background: rgba(0,0,0,0.8); border: 2px solid #fff;
+            color: #fff; padding: 10px 20px; font-size: 0.7rem; 
+            cursor: pointer; font-family: monospace; border-radius: 5px;
         }
 
-        footer { height: 20vh; display: flex; align-items: center; justify-content: center; letter-spacing: 8px; font-weight: bold; }
+        /* ФУТЕР И БЛОК РАЗРАБОТКИ */
+        #dev-toggle:checked ~ .dev-info { display: flex; }
+
+        .dev-info {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            height: 18vh; background: rgba(0,0,0,0.95);
+            border-top: 2px solid rgba(255,255,255,0.3);
+            z-index: 140; display: none; flex-direction: column;
+            align-items: center; justify-content: center;
+            font-family: monospace; font-size: 0.9rem; letter-spacing: 3px;
+            color: #aaa;
+        }
+        .dev-info strong { color: #fff; margin-bottom: 8px; font-size: 1.1rem; }
+
+        footer { height: 20vh; display: flex; align-items: center; justify-content: center; letter-spacing: 10px; font-weight: bold; position: relative; z-index: 10;}
     </style>
 </head>
 <body>
@@ -129,40 +152,40 @@
     <nav class="side-nav">
         <a href="https://t.me/robloxhall2">RME Channel</a>
         <a href="https://t.me/pr2rokl">Admin Profile</a>
+        <input type="checkbox" id="dev-toggle" style="display:none;">
+        <label for="dev-toggle">РАЗРАБОТКА</label>
         <a href="#">Contact Support</a>
     </nav>
 
+    <div class="dev-info">
+        <strong>Статус: В разработке</strong>
+        <span>Версия: 0.8.3 beta // 2026-03-16</span>
+    </div>
+
     <div class="bg-layer">
         <div class="bg-scroll">
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Erly life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Erly life crisis</div>
-            <div class="bg-text">Eraly life crisis</div><div class="bg-text">Erly life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Erly life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Erly life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Erly life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Erly life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Erly life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Erly life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Erly life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Erly life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Erly life crisis</div>
+            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
+            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
+            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
+            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
+            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
         </div>
     </div>
 
     <div class="container">
         <div class="section">
             <h1 class="glitch" data-text="ROBLOX MUSIC EVENTS">ROBLOX MUSIC EVENTS</h1>
-            <p style="color: #666; font-family: monospace; letter-spacing: 2px; margin-top: 20px;">By pr2rokl</p>
+            <p style="color: #666; font-family: monospace; letter-spacing: 3px; margin-top: 25px;">By pr2rokl</p>
         </div>
 
         <div class="section">
-            <div style="font-size: 5rem; font-weight: bold; letter-spacing: 20px; margin-bottom: 20px;">RME</div>
+            <div style="font-size: 6rem; font-weight: bold; letter-spacing: 25px; margin-bottom: 25px;">RME</div>
             <a href="https://t.me/robloxhall2" class="btn">ENTER CHANNEL</a>
         </div>
 
         <div class="section">
             <div class="qr-box"><div class="qr-img"></div></div>
-            <p style="margin-top:25px; letter-spacing:5px; color:#444; font-family: monospace; font-size: 0.7rem;">SCAN FOR ACCESS</p>
+            <p style="margin-top:30px; letter-spacing:6px; color:#555; font-family: monospace; font-size: 0.8rem;">SCAN FOR ACCESS</p>
         </div>
 
         <footer>2026 ROBLOX MUSIC EVENTS</footer>
