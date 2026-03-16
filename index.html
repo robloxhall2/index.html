@@ -15,7 +15,7 @@
             scroll-behavior: smooth;
         }
 
-        /* МАКСИМАЛЬНО ПЛОТНЫЙ ФОН */
+        /* ЯРКИЙ И ПЛОТНЫЙ ФОН */
         .bg-layer {
             position: fixed;
             top: 0; left: 0;
@@ -38,7 +38,8 @@
         .bg-text {
             font-size: 2rem;
             font-weight: 900;
-            color: rgba(255, 255, 255, 0.16); 
+            /* УВЕЛИЧЕНА ЯРКОСТЬ ДО 0.25 */
+            color: rgba(255, 255, 255, 0.25); 
             text-transform: uppercase;
             padding: 15px 35px;
             white-space: nowrap;
@@ -56,7 +57,7 @@
             width: 40px; height: 40px;
             z-index: 200; cursor: pointer;
             display: flex; flex-direction: column; justify-content: space-around;
-            background: rgba(0,0,0,0.9); border: 1px solid rgba(255,255,255,0.3); padding: 5px;
+            background: rgba(0,0,0,0.9); border: 1px solid rgba(255,255,255,0.4); padding: 5px;
         }
         .menu-btn span { width: 100%; height: 2px; background: #fff; transition: 0.3s; }
         
@@ -94,14 +95,15 @@
             padding: 0 40px;
         }
 
-        /* ТЕРМИНАЛ */
+        /* ТЕРМИНАЛ (ТА САМАЯ ШТУКА) */
         .dev-terminal {
-            border: 1px solid rgba(255,255,255,0.3);
-            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.5);
+            background: rgba(0, 0, 0, 0.8);
             padding: 30px; width: 85%; max-width: 400px;
             text-align: left; position: relative;
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
         }
-        .dev-terminal::before { content: "CORE_LOG"; position: absolute; top: -12px; left: 15px; background: #000; padding: 0 10px; font-family: monospace; font-size: 0.7rem; }
+        .dev-terminal::before { content: "CORE_LOG"; position: absolute; top: -12px; left: 15px; background: #000; padding: 0 10px; font-family: monospace; font-size: 0.7rem; color: #fff; }
 
         h1 { font-size: 4rem; letter-spacing: 15px; margin: 0; font-weight: bold; }
         
@@ -110,17 +112,17 @@
         .btn { border: 1px solid #fff; padding: 15px; color: #fff; text-decoration: none; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px; transition: 0.3s; font-family: monospace; text-align: center;}
         .btn:hover { background: #fff; color: #000; box-shadow: 0 0 15px rgba(255,255,255,0.4); }
         
-        .btn-full { grid-column: span 2; font-weight: bold; border-color: rgba(255,255,255,0.6); }
+        .btn-full { grid-column: span 2; font-weight: bold; border-color: rgba(255,255,255,0.8); }
 
         /* О НАС */
-        .info-block { display: none; margin-top: 30px; font-family: monospace; font-size: 0.8rem; color: #aaa; line-height: 1.6; max-width: 320px; animation: fadeIn 0.5s ease; }
+        .info-block { display: none; margin-top: 30px; font-family: monospace; font-size: 0.8rem; color: #ddd; line-height: 1.6; max-width: 320px; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         #about-toggle:checked ~ .about-content { display: block; }
 
         /* МУЗЫКА */
         .m-btn { position: fixed; top: 20px; left: 20px; z-index: 100; background: #000; border: 1px solid #fff; color: #fff; padding: 10px 15px; font-size: 0.6rem; cursor: pointer; font-family: monospace; border-radius: 2px; }
 
-        footer { height: 30vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: monospace; font-size: 0.65rem; color: #444; letter-spacing: 4px; line-height: 2.5; border-top: 1px solid rgba(255,255,255,0.05); }
+        footer { height: 30vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: monospace; font-size: 0.65rem; color: #666; letter-spacing: 4px; line-height: 2.5; border-top: 1px solid rgba(255,255,255,0.1); }
     </style>
 </head>
 <body>
@@ -135,7 +137,8 @@
     <nav class="side-nav">
         <a href="https://t.me/robloxhall2">RME Channel</a>
         <a href="https://t.me/pr2rokl">Admin 1</a>
-        <a href="https://t.me/Roretyu">Admin 2</a> <input type="checkbox" id="about-toggle" style="display:none;">
+        <a href="https://t.me/Roretyu">Admin 2</a>
+        <input type="checkbox" id="about-toggle" style="display:none;">
         <label for="about-toggle">О НАС</label>
         <a href="#">Contact Support</a>
     </nav>
@@ -145,29 +148,32 @@
             <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
             <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
             <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
+            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
+            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
         </div>
     </div>
 
     <div class="container">
         <div class="section">
             <div class="dev-terminal">
-                <div style="font-family: monospace; font-size: 0.8rem; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">STATUS: <span style="color:#fff">IN_DEVELOPMENT</span></div>
-                <div style="font-family: monospace; font-size: 0.7rem; color: #666;">
-                    BUILD: 0.9.8_BETA<br>
+                <div style="font-family: monospace; font-size: 0.8rem; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 5px;">STATUS: <span style="color:#fff">IN_DEVELOPMENT</span></div>
+                <div style="font-family: monospace; font-size: 0.7rem; color: #aaa;">
+                    BUILD: 0.9.8_BETA // 2026<br>
                     ENCRYPTION: AES-256<br>
-                    > Ожидание ввода...
+                    LOC: ST.PETERSBURG<br>
+                    > Система готова к работе.
                 </div>
             </div>
             
             <div class="info-block about-content">
                 <strong>ROBLOX MUSIC EVENTS</strong><br>
-                Организация и проведение масштабных концертов. Мы переносим опыт живых выступлений в виртуальную реальность.
+                Мы создаем новое измерение для концертов. Погружение в звук и визуал в самом центре Roblox.
             </div>
         </div>
 
         <div class="section">
             <h1>RME</h1>
-            <div style="font-family: monospace; color: #666; letter-spacing: 6px; text-transform: uppercase; font-size: 0.8rem;">Digital Music Events</div>
+            <div style="font-family: monospace; color: #888; letter-spacing: 6px; text-transform: uppercase; font-size: 0.8rem;">Digital Music Events</div>
             <div class="btn-grid">
                 <a href="https://t.me/robloxhall2" class="btn">Telegram</a>
                 <a href="https://t.me/pr2rokl" class="btn">Admin</a>
@@ -176,14 +182,14 @@
         </div>
 
         <div class="section">
-            <div style="width: 2px; height: 120px; background: #fff; box-shadow: 0 0 10px #fff;"></div>
-            <div style="font-family: monospace; font-size: 0.65rem; color: #555; margin-top: 25px; letter-spacing: 8px;">ATMOSPHERE_ACTIVE</div>
+            <div style="width: 2px; height: 120px; background: #fff; box-shadow: 0 0 15px #fff;"></div>
+            <div style="font-family: monospace; font-size: 0.65rem; color: #777; margin-top: 25px; letter-spacing: 8px;">ATMOSPHERE_ON</div>
         </div>
 
         <footer>
             <div style="color:#fff; margin-bottom:15px;">2026 ROBLOX MUSIC EVENTS</div>
             <div>DEVELOPED BY PR2ROKL & RORETYU</div>
-            <div>LOC: ST.PETERSBURG // RU</div>
+            <div>ST.PETERSBURG // RU</div>
         </footer>
     </div>
 
