@@ -18,26 +18,26 @@
             width: 100%; min-height: 100%;
             font-family: 'Times New Roman', serif;
             overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent; /* Убирает синюю рамку при клике на мобилках */
         }
 
-        /* --- ЭФФЕКТ ПОЯВЛЕНИЯ (REVEAL) --- */
+        /* --- АНИМАЦИЯ ПОЯВЛЕНИЯ --- */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 1.2s cubic-bezier(0.2, 1, 0.3, 1);
-            filter: blur(5px);
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: transform, opacity; /* Оптимизация для мобильных процессоров */
         }
 
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
-            filter: blur(0);
         }
 
-        /* Задержки для последовательного появления */
-        .delay-1 { transition-delay: 0.2s; }
-        .delay-2 { transition-delay: 0.4s; }
-        .delay-3 { transition-delay: 0.6s; }
+        /* Последовательные задержки */
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
 
         /* --- ФОН --- */
         .bg-layer {
@@ -45,89 +45,74 @@
             width: 100%; height: 100%; z-index: 1;
             pointer-events: none; display: flex;
             flex-direction: column; justify-content: space-around;
-            align-items: center; opacity: 0.15;
+            align-items: center; opacity: 0.1;
         }
 
         .bg-text {
-            font-size: clamp(2rem, 8vw, 5rem);
+            font-size: clamp(1.5rem, 10vw, 5rem);
             font-weight: 900; text-transform: uppercase;
             color: transparent; -webkit-text-stroke: 1px var(--accent);
-            white-space: nowrap; transform: rotate(-12deg);
-            animation: pulse 5s infinite ease-in-out;
+            white-space: nowrap; transform: rotate(-10deg);
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 0.3; transform: rotate(-12deg) scale(1); }
-            50% { opacity: 0.8; transform: rotate(-10deg) scale(1.05); }
-        }
-
-        /* --- ИНТЕРФЕЙС --- */
+        /* --- UI ЭЛЕМЕНТЫ --- */
         .m-btn {
-            position: fixed; top: 20px; left: 20px;
+            position: fixed; top: 15px; left: 15px;
             z-index: 1001; background: var(--bg); border: 1px solid var(--accent);
-            color: var(--accent); padding: 10px 15px;
-            font-family: var(--font-mono); font-size: 12px; cursor: pointer;
+            color: var(--accent); padding: 8px 12px;
+            font-family: var(--font-mono); font-size: 10px; cursor: pointer;
         }
 
-        #menu-toggle { display: none; }
         .menu-btn {
-            position: fixed; top: 20px; right: 20px;
-            width: 45px; height: 45px; z-index: 1001; cursor: pointer;
+            position: fixed; top: 15px; right: 15px;
+            width: 40px; height: 40px; z-index: 1001;
             background: var(--bg); border: 1px solid var(--accent);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
-        .menu-btn span { width: 25px; height: 1px; background: var(--accent); margin: 3px; transition: 0.3s; }
+        .menu-btn span { width: 20px; height: 1px; background: var(--accent); margin: 3px; }
 
-        .side-nav {
-            position: fixed; top: 0; right: -100%;
-            width: 100%; max-width: 350px; height: 100%;
-            background: rgba(0,0,0,0.98); z-index: 1000;
-            transition: 0.5s; padding: 100px 40px;
-            display: flex; flex-direction: column;
-            border-left: 1px solid var(--accent); box-sizing: border-box;
-        }
-
-        #menu-toggle:checked ~ .side-nav { right: 0; }
-
+        /* --- КОНТЕНТ --- */
         .container {
             position: relative; z-index: 10;
-            width: 100%; max-width: 1200px; margin: 0 auto;
+            width: 100%; padding: 0 15px; box-sizing: border-box;
         }
 
         .section {
             min-height: 100vh; display: flex; flex-direction: column;
             justify-content: center; align-items: center;
-            padding: 40px 20px; box-sizing: border-box;
+            text-align: center;
         }
 
         .dev-terminal {
-            border: 1px solid var(--accent); padding: 25px;
-            width: 100%; max-width: 500px; background: rgba(0,0,0,0.8);
+            border: 1px solid var(--accent); padding: 20px;
+            width: 100%; max-width: 450px; background: rgba(0,0,0,0.85);
             text-align: left;
         }
 
         h1 { 
-            font-size: clamp(3.5rem, 18vw, 8rem); margin: 0; 
-            letter-spacing: clamp(10px, 3vw, 25px); 
+            font-size: clamp(3rem, 20vw, 7rem); margin: 10px 0;
+            letter-spacing: clamp(5px, 4vw, 20px);
         }
 
         .btn-grid {
             display: grid; grid-template-columns: repeat(2, 1fr);
-            gap: 15px; width: 100%; max-width: 500px; margin-top: 30px;
+            gap: 10px; width: 100%; max-width: 450px;
         }
 
         .btn {
-            border: 1px solid var(--accent); padding: 18px;
+            border: 1px solid var(--accent); padding: 15px 5px;
             color: var(--accent); text-decoration: none;
-            font-family: var(--font-mono); font-size: 0.8rem;
-            text-align: center; transition: 0.3s; text-transform: uppercase;
+            font-family: var(--font-mono); font-size: 11px;
+            text-transform: uppercase; transition: 0.3s;
         }
 
-        .btn:hover { background: var(--accent); color: var(--bg); }
-
-        @media (max-width: 600px) {
+        /* Адаптация сетки кнопок для телефона */
+        @media (max-width: 480px) {
             .btn-grid { grid-template-columns: 1fr; }
+            .dev-terminal { padding: 15px; }
         }
+
+        .btn:active { background: var(--accent); color: var(--bg); }
     </style>
 </head>
 <body>
@@ -135,38 +120,30 @@
     <button class="m-btn" onclick="playMusic()" id="m-status">[ AUDIO: OFF ]</button>
     <audio id="track" loop><source src="Nettspend_-_you_ready_(SkySound.cc) (1).mp3" type="audio/mpeg"></audio>
 
-    <input type="checkbox" id="menu-toggle">
-    <label for="menu-toggle" class="menu-btn"><span></span><span></span><span></span></label>
-    
-    <nav class="side-nav">
-        <a href="https://t.me/robloxhall2" style="color:white; text-decoration:none; margin-bottom:20px; font-family:monospace;">RME CHANNEL</a>
-        <a href="https://t.me/pr2rokl" style="color:white; text-decoration:none; margin-bottom:20px; font-family:monospace;">ADMIN 1</a>
-    </nav>
-
     <div class="bg-layer">
-        <div class="bg-text">Early life crisis</div>
         <div class="bg-text">RME STUDIO</div>
-        <div class="bg-text">Early life crisis</div>
+        <div class="bg-text">VIRTUAL EVENTS</div>
+        <div class="bg-text">RME STUDIO</div>
     </div>
 
     <div class="container">
         <div class="section">
             <div class="dev-terminal reveal">
-                <div style="font-family: var(--font-mono); border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px; font-size: 0.8rem;">
-                    > SYSTEM STATUS: ONLINE
+                <div style="font-family: var(--font-mono); border-bottom: 1px solid #333; padding-bottom: 8px; margin-bottom: 12px; font-size: 0.7rem; color: #0f0;">
+                    > SYSTEM_CONNECTED
                 </div>
-                <div style="font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6;">
-                    [INFO] UNIT: ROBLOX MUSIC EVENTS<br>
-                    [INFO] TYPE: VIRTUAL PRODUCTION<br>
-                    [INFO] AREA: RU_REGION
+                <div style="font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.5;">
+                    [STATUS] ACTIVE<br>
+                    [UNIT] ROBLOX_MUSIC_EVENTS<br>
+                    [VER] 2.0.4_STABLE
                 </div>
             </div>
         </div>
 
         <div class="section">
             <h1 class="reveal">RME</h1>
-            <p class="reveal delay-1" style="font-family: var(--font-mono); letter-spacing: 5px; font-size: 0.7rem; color: #888; margin-bottom: 30px;">
-                // DIGITAL CONCERT EXPERIENCE
+            <p class="reveal delay-1" style="font-family: var(--font-mono); font-size: 10px; color: #888; margin-bottom: 25px; letter-spacing: 3px;">
+                // DIGITAL PRODUCTION HOUSE
             </p>
             
             <div class="btn-grid reveal delay-2">
@@ -178,22 +155,24 @@
     </div>
 
     <script>
-        // Функция появления элементов при скролле
         function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 150; // Дистанция до появления
+            const reveals = document.querySelectorAll(".reveal");
+            const windowHeight = window.innerHeight;
+            
+            reveals.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                // На мобильных срабатывает, когда элемент показался на 10%
+                const revealPoint = 50; 
                 
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add("active");
+                if (elementTop < windowHeight - revealPoint) {
+                    el.classList.add("active");
                 }
-            }
+            });
         }
 
+        // Слушаем и скролл, и касания экрана
         window.addEventListener("scroll", reveal);
-        // Запускаем один раз при загрузке, чтобы показать первый экран
+        window.addEventListener("touchmove", reveal);
         window.addEventListener("load", reveal);
 
         function playMusic() {
