@@ -19,61 +19,91 @@
             width: 100%; min-height: 100%;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            -webkit-user-select: none;
-            user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* --- ФОНОВАЯ НАДПИСЬ ПЛОТНО --- */
+        /* --- ФОН --- */
         .bg-fixed {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0; display: flex; flex-direction: column;
             justify-content: space-between; pointer-events: none;
-            opacity: 0.12; 
+            opacity: 0.1; 
         }
         .bg-row {
             display: flex; white-space: nowrap; font-size: 10vh;
             font-weight: 900; line-height: 0.8; text-transform: uppercase;
         }
         .bg-row:nth-child(even) { transform: translateX(-15%); color: transparent; -webkit-text-stroke: 1px var(--white); }
-        .bg-row:nth-child(odd) { transform: translateX(5%); }
 
-        /* --- КОНТЕНТ --- */
-        .container { position: relative; z-index: 10; width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 15px; box-sizing: border-box; }
-        .section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .container { 
+            position: relative; z-index: 10; 
+            width: 100%; max-width: 1200px; 
+            margin: 0 auto; padding: 0 15px; 
+            box-sizing: border-box; 
+        }
+        
+        .section { 
+            min-height: 90vh; 
+            display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; 
+            position: relative; 
+            padding: 50px 0;
+        }
 
         .reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* --- ТОТ САМЫЙ ТЕРМИНАЛ --- */
+        /* --- ВЕРТИКАЛЬНОЕ РАЗДЕЛЕНИЕ --- */
+        .ui-divider {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px 0;
+            width: 100%;
+        }
+
+        .line {
+            width: 1px;
+            height: clamp(100px, 20vh, 250px);
+            background: linear-gradient(to bottom, var(--white), transparent);
+            position: relative;
+        }
+
+        /* Технические метки по бокам от линии */
+        .line::after {
+            content: "SEC_04 // DATA_FLOW";
+            position: absolute;
+            left: 15px; top: 50%;
+            transform: translateY(-50%);
+            font-family: var(--font-mono);
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--gray);
+            white-space: nowrap;
+        }
+
+        .line::before {
+            content: "[ + ]";
+            position: absolute;
+            left: -13px; top: -20px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--white);
+        }
+
+        /* --- ТЕРМИНАЛ --- */
         .dev-terminal {
             border: 1px solid var(--white);
             padding: 30px;
             width: 100%;
             max-width: 450px;
-            background: rgba(0,0,0,0.9);
+            background: var(--black);
             text-align: left;
-            backdrop-filter: blur(10px);
-            box-sizing: border-box;
+            position: relative;
+            box-shadow: 20px 20px 0px rgba(255,255,255,0.05); /* Тень в стиле брутализма */
         }
 
-        .terminal-header {
-            font-family: var(--font-mono);
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-            font-size: 10px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .terminal-body {
-            font-family: var(--font-mono);
-            font-size: 13px;
-            line-height: 1.6;
-        }
-
-        /* --- ИНТЕРАКТИВНЫЙ ЕВЕНТ --- */
+        /* --- ЕВЕНТ --- */
         .event-wrapper {
             width: 100%;
             max-width: 450px;
@@ -81,59 +111,35 @@
             background: var(--black);
             cursor: pointer;
             overflow: hidden;
-            transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
-            position: relative;
+            transition: 0.7s cubic-bezier(0.19, 1, 0.22, 1);
         }
-
-        .event-placeholder {
-            padding: 80px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .event-placeholder span {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            letter-spacing: 5px;
-            border: 1px solid var(--white);
-            padding: 10px 15px;
-        }
-
-        .event-content {
-            display: none;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: 0.8s ease;
-        }
-
+        .event-wrapper:hover { transform: scale(1.02); }
+        .event-placeholder { padding: 80px 20px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 5px; }
+        .event-content { display: none; opacity: 0; }
         .event-wrapper.opened .event-placeholder { display: none; }
-        .event-wrapper.opened .event-content { display: block; opacity: 1; transform: translateY(0); }
+        .event-wrapper.opened .event-content { display: block; opacity: 1; animation: fadeIn 0.5s forwards; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .main-poster { width: 100%; height: auto; display: block; filter: grayscale(1); }
 
-        .poster-info {
-            padding: 20px;
-            text-align: left;
-            border-top: 1px solid var(--white);
-        }
-
-        /* --- UI --- */
-        h1 { font-size: clamp(3.5rem, 22vw, 10rem); font-weight: 900; margin: 0; letter-spacing: -6px; line-height: 0.8; }
-        .btn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; max-width: 500px; margin-top: 30px; }
-        .btn { border: 1px solid var(--white); padding: 18px; color: var(--white); text-decoration: none; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; transition: 0.3s; text-align: center;}
+        /* --- КНОПКИ --- */
+        h1 { font-size: clamp(5rem, 25vw, 12rem); font-weight: 900; margin: 0; letter-spacing: -8px; }
+        .btn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; max-width: 600px; margin-top: 40px; }
+        .btn { border: 1px solid var(--white); padding: 22px; color: var(--white); text-decoration: none; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; text-align: center; transition: 0.3s; }
         .btn:hover { background: var(--white); color: var(--black); }
 
         .m-btn {
-            position: fixed; top: 20px; left: 20px; z-index: 1000;
+            position: fixed; top: 25px; left: 25px; z-index: 1000;
             background: var(--black); border: 1px solid var(--white);
-            color: var(--white); padding: 10px 15px; font-family: var(--font-mono);
-            font-size: 10px; cursor: pointer;
+            color: var(--white); padding: 10px 18px; font-family: var(--font-mono); font-size: 10px;
         }
 
         @media (max-width: 600px) {
             .btn-grid { grid-template-columns: 1fr; }
-            .bg-row { font-size: 12vw; }
+            .line::after { display: none; } /* Убираем текст на мобилках, чтобы не теснил */
+            .line { height: 120px; }
+            .dev-terminal { box-shadow: none; }
         }
     </style>
 </head>
@@ -143,40 +149,40 @@
         <div class="bg-row">Early life crisis Early life crisis</div>
         <div class="bg-row">Early life crisis Early life crisis</div>
         <div class="bg-row">Early life crisis Early life crisis</div>
-        <div class="bg-row">Early life crisis Early life crisis</div>
-        <div class="bg-row">Early life crisis Early life crisis</div>
-        <div class="bg-row">Early life crisis Early life crisis</div>
     </div>
 
     <button class="m-btn" onclick="playMusic()" id="m-status">AUDIO // OFF</button>
     <audio id="track" loop><source src="Nettspend_-_you_ready_(SkySound.cc) (1).mp3" type="audio/mpeg"></audio>
 
     <div class="container">
+        
         <div class="section">
             <div class="dev-terminal reveal">
-                <div class="terminal-header">
-                    <span>> SYSTEM_CONNECTED</span>
+                <div style="font-family: var(--font-mono); font-size: 10px; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between;">
+                    <span>[ RME_TERMINAL_V4 ]</span>
                     <span id="header-clock">00:00</span>
                 </div>
-                <div class="terminal-body">
-                    [STATUS] ACTIVE<br>
-                    [UNIT] ROBLOX_MUSIC_EVENTS<br>
-                    [VER] 2.0.4_STABLE<br>
-                    [DATA] IMG_20260316_175210_319.jpg
+                <div style="font-family: var(--font-mono); font-size: 13px; line-height: 1.6;">
+                    > SYSTEM_INIT: SUCCESS<br>
+                    > TARGET_LOAD: IMG_319.jpg<br>
+                    > ENCRYPTION: ACTIVE<br>
+                    > <span style="background: white; color: black; padding: 0 5px;">READY FOR DEPLOYMENT</span>
                 </div>
             </div>
-        </div>
 
-        <div class="section">
+            <div class="ui-divider reveal">
+                <div class="line"></div>
+            </div>
+
             <div class="event-wrapper reveal" id="eventBox" onclick="openEvent()">
                 <div class="event-placeholder">
-                    <span>DECRYPT_DATA</span>
+                    <span>[ DECRYPT_POSTER_319 ]</span>
                 </div>
                 <div class="event-content">
-                    <img src="IMG_20260316_175210_319.jpg" alt="Concert Poster" class="main-poster">
-                    <div class="poster-info">
-                        <p style="font-family: var(--font-mono); font-size: 14px; margin: 0;">NETTSPEND // CONCERT</p>
-                        <p style="font-family: var(--font-mono); font-size: 10px; color: var(--gray); margin-top: 5px;">ALBUM: EARLY LIFE CRISIS // 2026</p>
+                    <img src="IMG_20260316_175210_319.jpg" alt="Poster" class="main-poster">
+                    <div style="padding: 20px; text-align: left; border-top: 1px solid #fff; background: #000;">
+                        <p style="font-family: var(--font-mono); font-size: 14px; margin: 0; letter-spacing: 2px;">NETTSPEND // CONCERT</p>
+                        <p style="font-family: var(--font-mono); font-size: 10px; color: var(--gray); margin-top: 8px;">YEAR: 2026 | HUB: ROBLOX_MUSIC</p>
                     </div>
                 </div>
             </div>
@@ -193,10 +199,8 @@
     </div>
 
     <script>
-        function openEvent() {
-            document.getElementById('eventBox').classList.add('opened');
-        }
-
+        function openEvent() { document.getElementById('eventBox').classList.add('opened'); }
+        
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
@@ -208,13 +212,11 @@
 
         function updateClock() {
             const now = new Date();
-            const time = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
-            document.getElementById('header-clock').innerText = time;
+            document.getElementById('header-clock').innerText = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
         }
 
         window.addEventListener("scroll", reveal);
         window.addEventListener("load", () => { reveal(); updateClock(); });
-        window.addEventListener("touchmove", reveal);
         setInterval(updateClock, 1000);
 
         function playMusic() {
