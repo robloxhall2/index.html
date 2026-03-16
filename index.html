@@ -12,95 +12,85 @@
             width: 100%; height: 100%;
             font-family: 'Times New Roman', serif;
             overflow-x: hidden;
-            scroll-behavior: smooth;
         }
 
-        /* ИСПРАВЛЕННЫЙ ФОН: теперь он на заднем плане */
+        /* ФОНОВЫЙ ТЕКСТ - ИСПРАВЛЕННЫЙ */
         .bg-layer {
             position: fixed;
             top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1; /* Уходим под контент */
+            width: 100vw; height: 100vh;
+            z-index: 1;
             pointer-events: none;
-            overflow: hidden;
-        }
-
-        .bg-scroll {
             display: flex;
-            flex-wrap: wrap;
-            width: 200%; /* Оптимизировал размер, чтобы не уезжало */
-            height: 200%;
-            position: absolute;
-            top: -50%; left: -50%;
-            transform: rotate(-12deg);
-            animation: moveAround 100s linear infinite;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            opacity: 0.4; /* Настройка видимости текста на фоне */
         }
 
         .bg-text {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 900;
-            /* Максимальный контраст */
-            color: rgba(255, 255, 255, 0.7); 
-            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.9);
             text-transform: uppercase;
-            padding: 20px;
+            color: rgba(255, 255, 255, 0.2); 
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
             white-space: nowrap;
-            letter-spacing: 3px;
+            transform: rotate(-15deg);
+            user-select: none;
+            animation: pulseFade 4s infinite ease-in-out;
         }
 
-        @keyframes moveAround {
-            0% { transform: translate(0, 0) rotate(-12deg); }
-            100% { transform: translate(10%, 10%) rotate(-12deg); }
+        @keyframes pulseFade {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.9; }
         }
 
-        /* МЕНЮ */
+        /* МЕНЮ - ФИКС БАГА */
         #menu-toggle { display: none; }
         .menu-btn {
             position: fixed; top: 20px; right: 20px;
             width: 45px; height: 45px;
-            z-index: 200; cursor: pointer;
+            z-index: 1000; /* Максимальный приоритет */
+            cursor: pointer;
             display: flex; flex-direction: column; justify-content: space-around;
             background: #000; border: 2px solid #fff; padding: 8px;
+            box-sizing: border-box;
         }
-        .menu-btn span { width: 100%; height: 3px; background: #fff; transition: 0.4s; }
+        .menu-btn span { width: 100%; height: 2px; background: #fff; transition: 0.3s; }
         
         .side-nav {
             position: fixed; top: 0; right: -100%;
-            width: 300px; height: 100%;
-            background: rgba(0, 0, 0, 0.98);
-            backdrop-filter: blur(25px);
-            z-index: 150; transition: 0.5s;
+            width: 280px; height: 100%;
+            background: #000;
+            z-index: 999; 
+            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex; flex-direction: column;
-            padding: 100px 40px; border-left: 3px solid #fff;
+            padding: 100px 30px; border-left: 2px solid #fff;
         }
         .side-nav a, .side-nav label {
             color: #fff; text-decoration: none; font-family: monospace;
-            font-size: 1rem; margin-bottom: 35px; letter-spacing: 2px;
-            text-transform: uppercase; cursor: pointer;
+            font-size: 1rem; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px;
         }
 
         #menu-toggle:checked ~ .side-nav { right: 0; }
-        #menu-toggle:checked ~ .menu-btn span:nth-child(1) { transform: translateY(12px) rotate(45deg); }
+        #menu-toggle:checked ~ .menu-btn span:nth-child(1) { transform: translateY(11px) rotate(45deg); }
         #menu-toggle:checked ~ .menu-btn span:nth-child(2) { opacity: 0; }
-        #menu-toggle:checked ~ .menu-btn span:nth-child(3) { transform: translateY(-12px) rotate(-45deg); }
+        #menu-toggle:checked ~ .menu-btn span:nth-child(3) { transform: translateY(-11px) rotate(-45deg); }
 
         /* КОНТЕНТ */
-        .container { position: relative; z-index: 10; }
+        .container { position: relative; z-index: 10; width: 100%; }
         .section {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 0 25px;
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            text-align: center; padding: 20px;
         }
 
         /* CORE_LOG */
         .dev-terminal {
             border: 2px solid #fff;
             background: rgba(0, 0, 0, 0.9);
-            padding: 30px; width: 85%; max-width: 480px;
+            padding: 30px; width: 85%; max-width: 450px;
             text-align: left; position: relative;
         }
         .dev-terminal::before { content: "CORE_LOG"; position: absolute; top: -14px; left: 20px; background: #000; padding: 0 10px; font-family: monospace; font-size: 0.8rem; border: 1px solid #fff; }
@@ -108,85 +98,74 @@
         h1 { font-size: 4.5rem; letter-spacing: 20px; margin: 0; font-weight: bold; }
         
         /* КНОПКИ */
-        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; max-width: 420px; margin-top: 35px; }
-        .btn { border: 2px solid #fff; padding: 18px; color: #fff; text-decoration: none; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 3px; transition: 0.3s; font-family: monospace; text-align: center; }
-        .btn:hover { background: #fff; color: #000; box-shadow: 0 0 15px #fff; }
-        .btn-full { grid-column: span 2; font-weight: bold; }
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; max-width: 400px; margin-top: 35px; }
+        .btn { border: 2px solid #fff; padding: 18px; color: #fff; text-decoration: none; text-transform: uppercase; font-size: 0.8rem; font-family: monospace; transition: 0.3s; text-align: center; }
+        .btn:hover { background: #fff; color: #000; }
+        .btn-full { grid-column: span 2; }
 
-        /* О НАС */
-        .info-block { display: none; margin-top: 25px; font-family: monospace; font-size: 0.85rem; color: #fff; line-height: 1.6; text-align: justify; animation: fadeIn 0.4s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .info-block { display: none; margin-top: 20px; font-family: monospace; font-size: 0.85rem; line-height: 1.7; }
         #about-toggle:checked ~ .about-content { display: block; }
 
-        /* AUDIO */
-        .m-btn { position: fixed; top: 20px; left: 20px; z-index: 100; background: #000; border: 2px solid #fff; color: #fff; padding: 12px 18px; font-size: 0.7rem; cursor: pointer; font-family: monospace; }
-
-        footer { height: 40vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: monospace; font-size: 0.7rem; color: #fff; letter-spacing: 5px; line-height: 3; border-top: 2px solid #fff; }
+        .m-btn { position: fixed; top: 20px; left: 20px; z-index: 1000; background: #000; border: 2px solid #fff; color: #fff; padding: 12px 18px; font-size: 0.7rem; font-family: monospace; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <button class="m-btn" onclick="playMusic()" id="m-status">AUDIO: OFF</button>
+    <button class="m-btn" onclick="playMusic()" id="m-status">[ AUDIO: OFF ]</button>
     <audio id="track" loop><source src="Nettspend_-_you_ready_(SkySound.cc) (1).mp3" type="audio/mpeg"></audio>
 
     <input type="checkbox" id="menu-toggle">
-    <label for="menu-toggle" class="menu-btn">
-        <span></span><span></span><span></span>
-    </label>
+    <label for="menu-toggle" class="menu-btn"><span></span><span></span><span></span></label>
+    
     <nav class="side-nav">
         <a href="https://t.me/robloxhall2">RME Channel</a>
         <a href="https://t.me/pr2rokl">Admin 1</a>
         <a href="https://t.me/Roretyu">Admin 2</a>
         <input type="checkbox" id="about-toggle" style="display:none;">
-        <label for="about-toggle">О НАС</label>
-        <a href="#">Support</a>
+        <label for="about-toggle" style="cursor:pointer;">О НАС</label>
     </nav>
 
     <div class="bg-layer">
-        <div class="bg-scroll">
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
-        </div>
+        <div class="bg-text">Early life crisis</div>
+        <div class="bg-text">Early life crisis</div>
+        <div class="bg-text">Early life crisis</div>
+        <div class="bg-text">Early life crisis</div>
     </div>
 
     <div class="container">
         <div class="section">
             <div class="dev-terminal">
-                <div style="font-family: monospace; font-size: 0.9rem; margin-bottom: 15px; border-bottom: 2px solid #fff; padding-bottom: 8px;">STATUS: <span style="color:#0f0">ACTIVE</span></div>
+                <div style="font-family: monospace; font-size: 0.9rem; margin-bottom: 12px; border-bottom: 1px solid #fff; padding-bottom: 8px;">
+                    STATUS: <span style="color:#0f0">ACTIVE</span>
+                </div>
                 <div style="font-family: monospace; font-size: 0.8rem;">
                     UNIT: ROBLOX MUSIC EVENTS<br>
                     REGION: RUSSIA_FEDERATION<br>
                     RANK: LEADING_STUDIO // 01
                 </div>
                 <div class="info-block about-content">
-                    <strong>ROBLOX MUSIC EVENTS</strong> — это амбициозная команда, объединившая талантливых специалистов из самых разных регионов России. Мы занимаем лидирующие позиции среди студий в своей нише, задавая новые стандарты качества в организации виртуальных шоу.
+                    ROBLOX MUSIC EVENTS — это амбициозная команда, объединившая специалистов из разных регионов России. Мы создаем уникальные виртуальные шоу на платформе Roblox.
                 </div>
             </div>
         </div>
 
         <div class="section">
             <h1>RME</h1>
-            <div style="font-family: monospace; letter-spacing: 8px; text-transform: uppercase; font-size: 0.9rem;">Digital Music Events</div>
+            <div style="font-family: monospace; font-size: 0.9rem; letter-spacing: 10px;">DIGITAL MUSIC EVENTS</div>
             <div class="btn-grid">
                 <a href="https://t.me/robloxhall2" class="btn">Telegram</a>
                 <a href="https://t.me/pr2rokl" class="btn">Admin</a>
                 <a href="https://t.me/Roretyu" class="btn btn-full">Admin 2 // Roretyu</a>
             </div>
         </div>
-
-        <footer>
-            <div>© 2026 ROBLOX MUSIC EVENTS</div>
-            <div>ST.PETERSBURG // REGIONAL SQUAD</div>
-        </footer>
     </div>
 
     <script>
         function playMusic() {
             var m = document.getElementById("track");
             var s = document.getElementById("m-status");
-            if (m.paused) { m.play(); s.innerHTML = "AUDIO: ON"; }
-            else { m.pause(); s.innerHTML = "AUDIO: OFF"; }
+            if (m.paused) { m.play(); s.innerHTML = "[ AUDIO: ON ]"; }
+            else { m.pause(); s.innerHTML = "[ AUDIO: OFF ]"; }
         }
     </script>
 </body>
