@@ -3,153 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>RME | Digital Production Studio</title>
+    <title>RME | Digital Production</title>
     <style>
         :root {
-            --accent: #ffffff;
-            --accent-dim: rgba(255, 255, 255, 0.4);
-            --bg: #050505;
-            --font-mono: 'Space Mono', 'Courier New', monospace;
-            --glow: 0 0 15px rgba(255, 255, 255, 0.2);
+            --white: #ffffff;
+            --gray: #404040;
+            --black: #000000;
+            --font-mono: 'Space Mono', monospace;
         }
 
         body, html {
-            background-color: var(--bg);
-            color: var(--accent);
+            background-color: var(--black);
+            color: var(--white);
             margin: 0; padding: 0;
             width: 100%; min-height: 100%;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            scroll-behavior: smooth;
-            -webkit-tap-highlight-color: transparent;
         }
 
-        /* Фоновая сетка — теперь еще тоньше, чтобы не мешать на маленьких экранах */
-        body::before {
-            content: "";
-            position: fixed; top: 0; left: 0;
+        /* --- ФОНОВАЯ ПЛОТНАЯ НАДПИСЬ --- */
+        .bg-fixed {
+            position: fixed;
+            top: 0; left: 0;
             width: 100%; height: 100%;
-            background-image: radial-gradient(var(--accent-dim) 0.5px, transparent 0.5px);
-            background-size: 30px 30px;
-            opacity: 0.1;
-            z-index: 0; pointer-events: none;
+            z-index: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            pointer-events: none;
+            opacity: 0.12; /* Плотная, но не мешает чтению */
+            user-select: none;
         }
 
-        /* --- АНИМАЦИЯ ПОЯВЛЕНИЯ --- */
+        .bg-row {
+            display: flex;
+            white-space: nowrap;
+            font-size: 12vh; /* Огромный размер */
+            font-weight: 900;
+            line-height: 0.8;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+        }
+
+        /* Смещение строк для плотности */
+        .bg-row:nth-child(even) { transform: translateX(-10%); color: transparent; -webkit-text-stroke: 1px var(--white); }
+        .bg-row:nth-child(odd) { transform: translateX(5%); }
+
+        /* --- ЭФФЕКТЫ --- */
         .reveal {
             opacity: 0;
             transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
-            will-change: transform, opacity;
+            transition: all 0.8s ease-out;
         }
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.2s; }
-        .delay-3 { transition-delay: 0.3s; }
-
-        /* --- UI ЭЛЕМЕНТЫ --- */
-        .m-btn {
-            position: fixed; top: 15px; left: 15px;
-            z-index: 1001; background: rgba(0,0,0,0.8); 
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--accent-dim);
-            color: var(--accent); padding: 10px 14px;
-            font-family: var(--font-mono); font-size: 10px; cursor: pointer;
-            text-transform: uppercase;
-        }
-
         /* --- КОНТЕНТ --- */
         .container {
-            position: relative; z-index: 10;
-            width: 100%; max-width: 1100px;
-            margin: 0 auto; padding: 0 20px;
+            position: relative;
+            z-index: 10; /* Поверх фона */
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
             box-sizing: border-box;
         }
 
         .section {
             min-height: 100vh;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            padding: 80px 0;
-            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
         }
 
-        /* Терминал */
+        /* Терминал в ч/б */
         .dev-terminal {
-            border: 1px solid var(--accent-dim);
-            padding: clamp(15px, 5vw, 30px); 
-            width: 100%; max-width: 500px;
-            background: rgba(255,255,255,0.02);
-            backdrop-filter: blur(10px);
-            box-sizing: border-box;
+            background: rgba(0,0,0,0.8);
+            border: 1px solid var(--white);
+            padding: 30px;
+            width: 100%;
+            max-width: 450px;
+            text-align: left;
+            backdrop-filter: blur(5px);
         }
 
-        /* Сетка проектов (Адаптивная: 3 в ряд на ПК, 1 на мобилке) */
-        .grid-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 15px; width: 100%; margin-top: 40px;
+        h1 {
+            font-size: clamp(4rem, 25vw, 11rem);
+            font-weight: 900;
+            margin: 0;
+            letter-spacing: -8px;
+            line-height: 0.8;
+            background: var(--black);
+            display: inline-block;
+            padding: 0 10px;
         }
 
-        .info-card {
-            border: 1px solid var(--accent-dim);
-            padding: 25px;
-            background: rgba(255,255,255,0.02);
-            transition: 0.4s;
-            cursor: default;
-        }
-
-        @media (hover: hover) {
-            .info-card:hover { background: var(--accent); color: var(--bg); transform: translateY(-5px); }
-        }
-
-        .info-card h3 { 
-            font-family: var(--font-mono); 
-            margin: 0 0 10px 0; font-size: 13px; text-transform: uppercase; letter-spacing: 2px;
-        }
-        .info-card p { font-size: 12px; opacity: 0.6; margin: 0; line-height: 1.6; }
-
-        h1 { 
-            font-size: clamp(3.5rem, 20vw, 9rem); margin: 0; 
-            font-weight: 900; letter-spacing: -2px; text-align: center;
-        }
-
-        /* Кнопки: 2 в ряд на ПК, 1 на мобилке */
         .btn-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr);
-            gap: 12px; width: 100%; max-width: 500px; margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            width: 100%;
+            max-width: 500px;
+            margin-top: 30px;
         }
+
         .btn {
-            border: 1px solid var(--accent); padding: clamp(15px, 4vw, 20px);
-            color: var(--accent); text-decoration: none;
-            font-family: var(--font-mono); font-size: 11px;
-            text-align: center; text-transform: uppercase;
+            border: 1px solid var(--white);
+            padding: 18px;
+            color: var(--white);
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            background: var(--black);
             transition: 0.3s;
         }
-        
-        .btn-full { grid-column: span 2; }
 
-        footer {
-            padding: 40px 20px; text-align: center;
-            font-family: var(--font-mono); font-size: clamp(9px, 2vw, 10px);
-            color: var(--accent-dim); border-top: 1px solid rgba(255,255,255,0.05);
+        .btn:hover { background: var(--white); color: var(--black); }
+
+        .m-btn {
+            position: fixed; top: 20px; left: 20px; z-index: 1000;
+            background: var(--black); border: 1px solid var(--white);
+            color: var(--white); padding: 10px 15px; font-family: var(--font-mono);
+            font-size: 10px; cursor: pointer;
         }
 
-        /* Специальные правки для мобильных устройств */
         @media (max-width: 600px) {
-            .section { padding: 60px 0; }
             .btn-grid { grid-template-columns: 1fr; }
-            .btn-full { grid-column: span 1; }
-            .bg-layer { opacity: 0.05; }
-            .info-card { padding: 20px; }
+            .bg-row { font-size: 15vw; } /* На мобилках еще плотнее */
         }
     </style>
 </head>
 <body>
+
+    <div class="bg-fixed">
+        <div class="bg-row">Early life crisis Early life crisis Early life crisis</div>
+        <div class="bg-row">Early life crisis Early life crisis Early life crisis</div>
+        <div class="bg-row">Early life crisis Early life crisis Early life crisis</div>
+        <div class="bg-row">Early life crisis Early life crisis Early life crisis</div>
+        <div class="bg-row">Early life crisis Early life crisis Early life crisis</div>
+        <div class="bg-row">Early life crisis Early life crisis Early life crisis</div>
+        <div class="bg-row">Early life crisis Early life crisis Early life crisis</div>
+        <div class="bg-row">Early life crisis Early life crisis Early life crisis</div>
+        <div class="bg-row">Early life crisis Early life crisis Early life crisis</div>
+        <div class="bg-row">Early life crisis Early life crisis Early life crisis</div>
+    </div>
 
     <button class="m-btn" onclick="playMusic()" id="m-status">AUDIO // OFF</button>
     <audio id="track" loop><source src="Nettspend_-_you_ready_(SkySound.cc) (1).mp3" type="audio/mpeg"></audio>
@@ -157,98 +159,48 @@
     <div class="container">
         <div class="section">
             <div class="dev-terminal reveal">
-                <div style="font-family: var(--font-mono); font-size: 10px; margin-bottom: 20px; color: var(--accent-dim); display: flex; justify-content: space-between;">
-                    <span>[ SYSTEM_MANIFEST ]</span>
-                    <span id="header-clock" style="color: #fff;">00:00</span>
+                <div style="font-family: var(--font-mono); font-size: 10px; border-bottom: 1px solid var(--white); padding-bottom: 10px; margin-bottom: 15px;">
+                    [ SYSTEM_STATUS: STABLE ]
                 </div>
-                <div style="font-family: var(--font-mono); font-size: clamp(12px, 3vw, 14px); line-height: 1.8;">
-                    <span style="color: var(--accent-dim);">></span> ID: RME_CORE_V3<br>
-                    <span style="color: var(--accent-dim);">></span> LOC: RU_SERVER_HUB<br>
-                    <span style="color: var(--accent-dim);">></span> TYPE: MUSIC_ARCHITECTS<br>
-                    <span style="color: var(--accent-dim);">></span> STATUS: <span style="color: #0f0;">STABLE</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2 class="reveal" style="font-family: var(--font-mono); font-size: 12px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 30px; color: var(--accent-dim);">// Capabilities</h2>
-            <div class="grid-info">
-                <div class="info-card reveal delay-1">
-                    <h3>Environment</h3>
-                    <p>Проектирование иммерсивных миров и сцен, которые захватывают дух с первых секунд.</p>
-                </div>
-                <div class="info-card reveal delay-2">
-                    <h3>Light & Sound</h3>
-                    <p>Синхронизация визуальных эффектов и аудио для создания полноценного шоу-контента.</p>
-                </div>
-                <div class="info-card reveal delay-3">
-                    <h3>Optimization</h3>
-                    <p>Ваши ивенты будут работать плавно как на мощных ПК, так и на бюджетных смартфонах.</p>
+                <div style="font-family: var(--font-mono); font-size: 13px; line-height: 1.6;">
+                    UNIT: RME_STUDIO<br>
+                    RANK: LEAD_01<br>
+                    LOC: RUSSIA_FED<br>
+                    <span style="background: var(--white); color: var(--black);">ACTIVE OPERATIONAL MODE</span>
                 </div>
             </div>
         </div>
 
         <div class="section">
             <h1 class="reveal">RME</h1>
-            <div class="reveal delay-1" style="font-family: var(--font-mono); font-size: clamp(10px, 3vw, 12px); letter-spacing: clamp(5px, 2vw, 10px); color: var(--accent-dim); margin-top: 10px;">VIRTUAL PRODUCTION</div>
+            <div class="reveal" style="font-family: var(--font-mono); letter-spacing: 5px; font-size: 12px; margin-top: 10px;">VIRTUAL PRODUCTION</div>
             
-            <div class="btn-grid reveal delay-2">
+            <div class="btn-grid reveal">
                 <a href="https://t.me/robloxhall2" class="btn">Telegram</a>
-                <a href="https://t.me/pr2rokl" class="btn">Admin One</a>
-                <a href="https://t.me/Roretyu" class="btn btn-full">Admin Two // Roretyu</a>
+                <a href="https://t.me/pr2rokl" class="btn">Admin 1</a>
+                <a href="https://t.me/Roretyu" class="btn" style="grid-column: 1 / -1;">Admin 2 // Roretyu</a>
             </div>
         </div>
     </div>
 
-    <footer>
-        <div id="footer-time">00:00:00</div>
-        <div style="margin-top: 12px; letter-spacing: 1px;">© 2024 RME STUDIO. DESIGNED FOR THE METAVERSE.</div>
-    </footer>
-
     <script>
-        // Анимация появления при скролле (ПК + Тач)
         function reveal() {
-            const reveals = document.querySelectorAll(".reveal");
-            const windowHeight = window.innerHeight;
-            reveals.forEach(el => {
-                const elementTop = el.getBoundingClientRect().top;
-                const revealPoint = 60; 
-                if (elementTop < windowHeight - revealPoint) {
-                    el.classList.add("active");
-                }
-            });
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) { reveals[i].classList.add("active"); }
+            }
         }
-
         window.addEventListener("scroll", reveal);
-        window.addEventListener("touchmove", reveal);
         window.addEventListener("load", reveal);
+        window.addEventListener("touchmove", reveal);
 
-        // Часы (обновляются в двух местах)
-        function updateTime() {
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString();
-            const shortTime = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
-            document.getElementById('footer-time').innerText = 'SYSTEM_CLOCK // ' + timeStr;
-            document.getElementById('header-clock').innerText = shortTime;
-        }
-        setInterval(updateTime, 1000);
-        updateTime();
-
-        // Аудио логика
         function playMusic() {
             var m = document.getElementById("track");
             var s = document.getElementById("m-status");
-            if (m.paused) { 
-                m.play(); 
-                s.innerHTML = "AUDIO // ON";
-                s.style.borderColor = "#0f0";
-                s.style.color = "#0f0";
-            } else { 
-                m.pause(); 
-                s.innerHTML = "AUDIO // OFF";
-                s.style.borderColor = "var(--accent-dim)";
-                s.style.color = "#fff";
-            }
+            if (m.paused) { m.play(); s.innerHTML = "AUDIO // ON"; s.style.background = "#fff"; s.style.color = "#000"; }
+            else { m.pause(); s.innerHTML = "AUDIO // OFF"; s.style.background = "#000"; s.style.color = "#fff"; }
         }
     </script>
 </body>
