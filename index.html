@@ -27,22 +27,21 @@
         .bg-scroll {
             display: flex;
             flex-wrap: wrap;
-            width: 600%; 
-            height: 600%;
+            width: 800%; 
+            height: 800%;
             position: absolute;
-            top: -250%; left: -250%;
+            top: -300%; left: -300%;
             transform: rotate(-15deg);
-            animation: moveAround 150s linear infinite;
+            animation: moveAround 160s linear infinite;
         }
 
         .bg-text {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 900;
-            color: rgba(255, 255, 255, 0.15); 
+            color: rgba(255, 255, 255, 0.16); 
             text-transform: uppercase;
-            padding: 15px 30px;
+            padding: 15px 35px;
             white-space: nowrap;
-            letter-spacing: 1px;
         }
 
         @keyframes moveAround {
@@ -50,24 +49,41 @@
             100% { transform: translate(15%, 15%) rotate(-15deg); }
         }
 
-        /* БОКОВЫЕ ЛИНИИ И КООРДИНАТЫ */
-        .side-decor {
-            position: fixed; top: 0; height: 100%; width: 40px;
-            display: flex; flex-direction: column; justify-content: space-between;
-            align-items: center; padding: 20px 0;
-            font-family: monospace; font-size: 0.6rem; color: #333;
-            z-index: 5; text-transform: uppercase;
+        /* МЕНЮ */
+        #menu-toggle { display: none; }
+        .menu-btn {
+            position: fixed; top: 20px; right: 20px;
+            width: 40px; height: 40px;
+            z-index: 200; cursor: pointer;
+            display: flex; flex-direction: column; justify-content: space-around;
+            background: rgba(0,0,0,0.9); border: 1px solid rgba(255,255,255,0.3); padding: 5px;
         }
-        .side-left { left: 0; border-right: 1px solid rgba(255,255,255,0.05); }
-        .side-right { right: 0; border-left: 1px solid rgba(255,255,255,0.05); }
+        .menu-btn span { width: 100%; height: 2px; background: #fff; transition: 0.3s; }
+        
+        .side-nav {
+            position: fixed; top: 0; right: -100%;
+            width: 280px; height: 100%;
+            background: rgba(5, 5, 5, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 150; transition: 0.5s;
+            display: flex; flex-direction: column;
+            padding: 100px 40px; border-left: 1px solid rgba(255,255,255,0.1);
+        }
+        .side-nav a, .side-nav label {
+            color: #fff; text-decoration: none; font-family: monospace;
+            font-size: 0.9rem; margin-bottom: 30px; letter-spacing: 2px;
+            text-transform: uppercase; cursor: pointer; border-bottom: 1px solid transparent;
+            width: fit-content;
+        }
+        .side-nav a:hover, .side-nav label:hover { border-bottom: 1px solid #fff; }
+
+        #menu-toggle:checked ~ .side-nav { right: 0; }
+        #menu-toggle:checked ~ .menu-btn span:nth-child(1) { transform: translateY(11px) rotate(45deg); }
+        #menu-toggle:checked ~ .menu-btn span:nth-child(2) { opacity: 0; }
+        #menu-toggle:checked ~ .menu-btn span:nth-child(3) { transform: translateY(-11px) rotate(-45deg); }
 
         /* КОНТЕНТ */
-        .container { 
-            position: relative; 
-            z-index: 10; 
-            height: 400vh; 
-        }
-
+        .container { position: relative; z-index: 10; height: 500vh; }
         .section {
             height: 100vh;
             display: flex;
@@ -75,60 +91,36 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 0 50px;
+            padding: 0 40px;
         }
 
-        /* ТЕРМИНАЛ РАЗРАБОТКИ */
+        /* ТЕРМИНАЛ */
         .dev-terminal {
             border: 1px solid rgba(255,255,255,0.3);
             background: rgba(255,255,255,0.03);
-            padding: 30px;
-            max-width: 450px;
-            width: 80%;
-            text-align: left;
-            position: relative;
+            padding: 30px; width: 85%; max-width: 400px;
+            text-align: left; position: relative;
         }
-        .dev-terminal::before {
-            content: "CORE_PROCESS";
-            position: absolute; top: -12px; left: 15px;
-            background: #000; padding: 0 10px;
-            font-family: monospace; font-size: 0.7rem;
-        }
+        .dev-terminal::before { content: "CORE_LOG"; position: absolute; top: -12px; left: 15px; background: #000; padding: 0 10px; font-family: monospace; font-size: 0.7rem; }
 
-        .status-line {
-            display: flex; justify-content: space-between;
-            font-family: monospace; font-size: 0.8rem;
-            margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 5px;
-        }
+        h1 { font-size: 4rem; letter-spacing: 15px; margin: 0; font-weight: bold; }
+        
+        /* КНОПКИ */
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; max-width: 400px; margin-top: 30px; }
+        .btn { border: 1px solid #fff; padding: 15px; color: #fff; text-decoration: none; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px; transition: 0.3s; font-family: monospace; text-align: center;}
+        .btn:hover { background: #fff; color: #000; box-shadow: 0 0 15px rgba(255,255,255,0.4); }
+        
+        .btn-full { grid-column: span 2; font-weight: bold; border-color: rgba(255,255,255,0.6); }
 
-        h1 { font-size: 3.5rem; letter-spacing: 15px; font-weight: bold; margin: 0; }
-        .sub-text { font-family: monospace; color: #666; letter-spacing: 5px; text-transform: uppercase; margin-top: 10px; }
-
-        .btn-box { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; margin-top: 20px; }
-        .btn { 
-            border: 1px solid #fff; padding: 15px; 
-            color: #fff; text-decoration: none; text-transform: uppercase;
-            letter-spacing: 2px; font-size: 0.7rem; text-align: center;
-            transition: 0.3s;
-        }
-        .btn:hover { background: #fff; color: #000; }
+        /* О НАС */
+        .info-block { display: none; margin-top: 30px; font-family: monospace; font-size: 0.8rem; color: #aaa; line-height: 1.6; max-width: 320px; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        #about-toggle:checked ~ .about-content { display: block; }
 
         /* МУЗЫКА */
-        .m-btn {
-            position: fixed; top: 20px; left: 50px; z-index: 100;
-            background: #000; border: 1px solid #fff;
-            color: #fff; padding: 10px 15px; font-size: 0.6rem; cursor: pointer;
-            letter-spacing: 2px;
-        }
+        .m-btn { position: fixed; top: 20px; left: 20px; z-index: 100; background: #000; border: 1px solid #fff; color: #fff; padding: 10px 15px; font-size: 0.6rem; cursor: pointer; font-family: monospace; border-radius: 2px; }
 
-        footer { 
-            height: 30vh; display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; 
-            font-family: monospace; font-size: 0.65rem; color: #444; 
-            border-top: 1px solid rgba(255,255,255,0.05);
-            line-height: 2; letter-spacing: 3px;
-        }
+        footer { height: 30vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: monospace; font-size: 0.65rem; color: #444; letter-spacing: 4px; line-height: 2.5; border-top: 1px solid rgba(255,255,255,0.05); }
     </style>
 </head>
 <body>
@@ -136,18 +128,20 @@
     <button class="m-btn" onclick="playMusic()" id="m-status">[ AUDIO: OFF ]</button>
     <audio id="track" loop><source src="Nettspend_-_you_ready_(SkySound.cc) (1).mp3" type="audio/mpeg"></audio>
 
-    <div class="side-decor side-left">
-        <span>RME_2026</span><span>59.93°N</span><span>30.33°E</span><span>SYSTEM_ACTIVE</span>
-    </div>
-    <div class="side-decor side-right">
-        <span>PR2ROKL</span><span>IDX_089</span><span>CSS_GRID</span><span>EARLY_CRISIS</span>
-    </div>
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="menu-btn">
+        <span></span><span></span><span></span>
+    </label>
+    <nav class="side-nav">
+        <a href="https://t.me/robloxhall2">RME Channel</a>
+        <a href="https://t.me/pr2rokl">Admin 1</a>
+        <a href="https://t.me/Roretyu">Admin 2</a> <input type="checkbox" id="about-toggle" style="display:none;">
+        <label for="about-toggle">О НАС</label>
+        <a href="#">Contact Support</a>
+    </nav>
 
     <div class="bg-layer">
         <div class="bg-scroll">
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
             <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
             <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
             <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
@@ -157,40 +151,39 @@
     <div class="container">
         <div class="section">
             <div class="dev-terminal">
-                <div class="status-line"><span>STATUS:</span><span style="color:#fff">IN_DEVELOPMENT</span></div>
-                <div class="status-line"><span>PROJECT:</span><span>ROBLOX_HALL_2</span></div>
-                <div class="status-line"><span>BUILD:</span><span>0.9.1_BETA</span></div>
-                <div class="status-line"><span>DATE:</span><span>16.03.2026</span></div>
-                <p style="font-family:monospace; font-size:0.7rem; color:#555; margin-top:15px;">
-                    > Инициализация аудио-движка... OK<br>
-                    > Загрузка текстур окружения... OK<br>
-                    > Подключение к RME_SYSTEM... ИДЁТ...
-                </p>
+                <div style="font-family: monospace; font-size: 0.8rem; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;">STATUS: <span style="color:#fff">IN_DEVELOPMENT</span></div>
+                <div style="font-family: monospace; font-size: 0.7rem; color: #666;">
+                    BUILD: 0.9.8_BETA<br>
+                    ENCRYPTION: AES-256<br>
+                    > Ожидание ввода...
+                </div>
+            </div>
+            
+            <div class="info-block about-content">
+                <strong>ROBLOX MUSIC EVENTS</strong><br>
+                Организация и проведение масштабных концертов. Мы переносим опыт живых выступлений в виртуальную реальность.
             </div>
         </div>
 
         <div class="section">
             <h1>RME</h1>
-            <div class="sub-text">Digital Music Events</div>
-            <div class="btn-box">
+            <div style="font-family: monospace; color: #666; letter-spacing: 6px; text-transform: uppercase; font-size: 0.8rem;">Digital Music Events</div>
+            <div class="btn-grid">
                 <a href="https://t.me/robloxhall2" class="btn">Telegram</a>
                 <a href="https://t.me/pr2rokl" class="btn">Admin</a>
+                <a href="https://t.me/Roretyu" class="btn btn-full">Admin 2</a>
             </div>
         </div>
 
         <div class="section">
-            <div style="font-size: 0.8rem; letter-spacing: 10px; color: #444; margin-bottom: 20px;">ATMOSPHERE</div>
-            <div style="width: 2px; height: 100px; background: #fff;"></div>
-            <div style="font-family: monospace; font-size: 0.7rem; color: #888; margin-top: 20px; max-width: 250px;">
-                Мы создаем звук. Мы создаем пространство. Мы создаем будущее Roblox сцены.
-            </div>
+            <div style="width: 2px; height: 120px; background: #fff; box-shadow: 0 0 10px #fff;"></div>
+            <div style="font-family: monospace; font-size: 0.65rem; color: #555; margin-top: 25px; letter-spacing: 8px;">ATMOSPHERE_ACTIVE</div>
         </div>
 
         <footer>
-            <div style="margin-bottom: 20px; color: #fff;">2026 ROBLOX MUSIC EVENTS</div>
-            <div>ALL RIGHTS RESERVED // PR2ROKL PRODUCTION</div>
-            <div>DATA STREAM: ENCRYPTED // REGION: SPB_RU</div>
-            <div style="margin-top: 15px; opacity: 0.2;">01010010 01001101 01000101</div>
+            <div style="color:#fff; margin-bottom:15px;">2026 ROBLOX MUSIC EVENTS</div>
+            <div>DEVELOPED BY PR2ROKL & RORETYU</div>
+            <div>LOC: ST.PETERSBURG // RU</div>
         </footer>
     </div>
 
