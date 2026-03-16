@@ -15,7 +15,7 @@
             scroll-behavior: smooth;
         }
 
-        /* ДВИЖУЩИЙСЯ ФОН — ПЛОТНОЕ ЗАПОЛНЕНИЕ */
+        /* МАКСИМАЛЬНО ПЛОТНЫЙ ФОН */
         .bg-layer {
             position: fixed;
             top: 0; left: 0;
@@ -27,28 +27,39 @@
         .bg-scroll {
             display: flex;
             flex-wrap: wrap;
-            width: 500%; 
-            height: 500%;
+            width: 600%; 
+            height: 600%;
             position: absolute;
-            top: -200%; left: -200%;
+            top: -250%; left: -250%;
             transform: rotate(-15deg);
-            animation: moveAround 120s linear infinite;
+            animation: moveAround 150s linear infinite;
         }
 
         .bg-text {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 900;
-            color: rgba(255, 255, 255, 0.14); /* Чуть ярче для видимости */
+            color: rgba(255, 255, 255, 0.15); 
             text-transform: uppercase;
-            padding: 25px 50px;
+            padding: 15px 30px;
             white-space: nowrap;
-            letter-spacing: 3px;
+            letter-spacing: 1px;
         }
 
         @keyframes moveAround {
             0% { transform: translate(0, 0) rotate(-15deg); }
             100% { transform: translate(15%, 15%) rotate(-15deg); }
         }
+
+        /* БОКОВЫЕ ЛИНИИ И КООРДИНАТЫ */
+        .side-decor {
+            position: fixed; top: 0; height: 100%; width: 40px;
+            display: flex; flex-direction: column; justify-content: space-between;
+            align-items: center; padding: 20px 0;
+            font-family: monospace; font-size: 0.6rem; color: #333;
+            z-index: 5; text-transform: uppercase;
+        }
+        .side-left { left: 0; border-right: 1px solid rgba(255,255,255,0.05); }
+        .side-right { right: 0; border-left: 1px solid rgba(255,255,255,0.05); }
 
         /* КОНТЕНТ */
         .container { 
@@ -64,68 +75,60 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 0 20px;
+            padding: 0 50px;
         }
 
-        /* ДЕКОР */
-        .tech-line {
-            width: 150px; height: 1px;
-            background: rgba(255,255,255,0.2);
-            margin: 20px 0;
-        }
-
-        /* БЛОК РАЗРАБОТКИ (ГЛАВНЫЙ) */
-        .dev-card {
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 40px;
-            background: rgba(255,255,255,0.02);
-            backdrop-filter: blur(5px);
-            max-width: 320px;
+        /* ТЕРМИНАЛ РАЗРАБОТКИ */
+        .dev-terminal {
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.03);
+            padding: 30px;
+            max-width: 450px;
+            width: 80%;
+            text-align: left;
             position: relative;
         }
-        .dev-card::before {
-            content: "SYSTEM_LOG";
-            position: absolute; top: -10px; left: 20px;
+        .dev-terminal::before {
+            content: "CORE_PROCESS";
+            position: absolute; top: -12px; left: 15px;
             background: #000; padding: 0 10px;
-            font-family: monospace; font-size: 0.7rem; color: #fff;
+            font-family: monospace; font-size: 0.7rem;
         }
 
-        h1 { font-size: 2rem; letter-spacing: 5px; text-transform: uppercase; margin: 0; }
-        .status-text { 
-            font-family: monospace; font-size: 0.9rem; 
-            color: #fff; letter-spacing: 2px; text-transform: uppercase;
+        .status-line {
+            display: flex; justify-content: space-between;
+            font-family: monospace; font-size: 0.8rem;
+            margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 5px;
         }
-        .version { color: #555; font-size: 0.7rem; margin-top: 10px; font-family: monospace; }
 
-        /* КНОПКИ */
-        .btn-list { display: flex; flex-direction: column; gap: 15px; margin-top: 30px; }
+        h1 { font-size: 3.5rem; letter-spacing: 15px; font-weight: bold; margin: 0; }
+        .sub-text { font-family: monospace; color: #666; letter-spacing: 5px; text-transform: uppercase; margin-top: 10px; }
+
+        .btn-box { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; margin-top: 20px; }
         .btn { 
-            border: 1px solid #fff; padding: 12px 30px; 
+            border: 1px solid #fff; padding: 15px; 
             color: #fff; text-decoration: none; text-transform: uppercase;
-            letter-spacing: 3px; font-size: 0.8rem; transition: 0.3s;
+            letter-spacing: 2px; font-size: 0.7rem; text-align: center;
+            transition: 0.3s;
         }
         .btn:hover { background: #fff; color: #000; }
 
-        /* QR */
-        .qr-box {
-            width: 240px; height: 240px;
-            background: #000; border: 1px solid #333;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .qr-img {
-            width: 85%; height: 85%; background: #fff;
-            -webkit-mask: url('Screenshot_20260316_075541_Google.jpg') center/contain no-repeat;
-            mask: url('Screenshot_20260316_075541_Google.jpg') center/contain no-repeat;
-        }
-
         /* МУЗЫКА */
         .m-btn {
-            position: fixed; top: 20px; left: 20px; z-index: 100;
-            background: rgba(0,0,0,0.8); border: 1px solid #fff;
-            color: #fff; padding: 8px 15px; font-size: 0.6rem; cursor: pointer;
+            position: fixed; top: 20px; left: 50px; z-index: 100;
+            background: #000; border: 1px solid #fff;
+            color: #fff; padding: 10px 15px; font-size: 0.6rem; cursor: pointer;
+            letter-spacing: 2px;
         }
 
-        footer { height: 15vh; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; letter-spacing: 5px; color: #333; }
+        footer { 
+            height: 30vh; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; 
+            font-family: monospace; font-size: 0.65rem; color: #444; 
+            border-top: 1px solid rgba(255,255,255,0.05);
+            line-height: 2; letter-spacing: 3px;
+        }
     </style>
 </head>
 <body>
@@ -133,44 +136,62 @@
     <button class="m-btn" onclick="playMusic()" id="m-status">[ AUDIO: OFF ]</button>
     <audio id="track" loop><source src="Nettspend_-_you_ready_(SkySound.cc) (1).mp3" type="audio/mpeg"></audio>
 
+    <div class="side-decor side-left">
+        <span>RME_2026</span><span>59.93°N</span><span>30.33°E</span><span>SYSTEM_ACTIVE</span>
+    </div>
+    <div class="side-decor side-right">
+        <span>PR2ROKL</span><span>IDX_089</span><span>CSS_GRID</span><span>EARLY_CRISIS</span>
+    </div>
+
     <div class="bg-layer">
         <div class="bg-scroll">
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
-            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
+            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
+            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
+            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
+            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
+            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
+            <div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div><div class="bg-text">Early life crisis</div>
         </div>
     </div>
 
     <div class="container">
         <div class="section">
-            <div class="dev-card">
-                <div class="status-text">Статус: В разработке</div>
-                <div class="tech-line"></div>
-                <div class="version">PROJECT: RME // VER: 0.8.9<br>LAST UPDATE: 16.03.2026</div>
-            </div>
-            <p style="margin-top: 30px; font-family: monospace; font-size: 0.7rem; color: #444; letter-spacing: 2px;">SCROLL TO NAVIGATE</p>
-        </div>
-
-        <div class="section">
-            <h1 style="font-size: 4rem; letter-spacing: 15px;">RME</h1>
-            <p style="color: #666; font-family: monospace; letter-spacing: 3px;">BY PR2ROKL</p>
-            <div class="btn-list">
-                <a href="https://t.me/robloxhall2" class="btn">Telegram Channel</a>
-                <a href="https://t.me/pr2rokl" class="btn">Admin Profile</a>
+            <div class="dev-terminal">
+                <div class="status-line"><span>STATUS:</span><span style="color:#fff">IN_DEVELOPMENT</span></div>
+                <div class="status-line"><span>PROJECT:</span><span>ROBLOX_HALL_2</span></div>
+                <div class="status-line"><span>BUILD:</span><span>0.9.1_BETA</span></div>
+                <div class="status-line"><span>DATE:</span><span>16.03.2026</span></div>
+                <p style="font-family:monospace; font-size:0.7rem; color:#555; margin-top:15px;">
+                    > Инициализация аудио-движка... OK<br>
+                    > Загрузка текстур окружения... OK<br>
+                    > Подключение к RME_SYSTEM... ИДЁТ...
+                </p>
             </div>
         </div>
 
         <div class="section">
-            <div class="qr-box"><div class="qr-img"></div></div>
-            <p style="margin-top:20px; letter-spacing:4px; color:#444; font-family: monospace; font-size: 0.7rem;">DECRYPTING ACCESS...</p>
+            <h1>RME</h1>
+            <div class="sub-text">Digital Music Events</div>
+            <div class="btn-box">
+                <a href="https://t.me/robloxhall2" class="btn">Telegram</a>
+                <a href="https://t.me/pr2rokl" class="btn">Admin</a>
+            </div>
         </div>
 
-        <footer>2026 ROBLOX MUSIC EVENTS</footer>
+        <div class="section">
+            <div style="font-size: 0.8rem; letter-spacing: 10px; color: #444; margin-bottom: 20px;">ATMOSPHERE</div>
+            <div style="width: 2px; height: 100px; background: #fff;"></div>
+            <div style="font-family: monospace; font-size: 0.7rem; color: #888; margin-top: 20px; max-width: 250px;">
+                Мы создаем звук. Мы создаем пространство. Мы создаем будущее Roblox сцены.
+            </div>
+        </div>
+
+        <footer>
+            <div style="margin-bottom: 20px; color: #fff;">2026 ROBLOX MUSIC EVENTS</div>
+            <div>ALL RIGHTS RESERVED // PR2ROKL PRODUCTION</div>
+            <div>DATA STREAM: ENCRYPTED // REGION: SPB_RU</div>
+            <div style="margin-top: 15px; opacity: 0.2;">01010010 01001101 01000101</div>
+        </footer>
     </div>
 
     <script>
