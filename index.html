@@ -21,108 +21,97 @@
             overflow-x: hidden;
         }
 
-        /* --- ФОНОВАЯ ПЛОТНАЯ НАДПИСЬ --- */
+        /* --- ФОНОВАЯ НАДПИСЬ ПЛОТНО --- */
         .bg-fixed {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            pointer-events: none;
-            opacity: 0.12; /* Плотная, но не мешает чтению */
-            user-select: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; display: flex; flex-direction: column;
+            justify-content: space-between; pointer-events: none;
+            opacity: 0.12; user-select: none;
         }
-
         .bg-row {
-            display: flex;
-            white-space: nowrap;
-            font-size: 12vh; /* Огромный размер */
-            font-weight: 900;
-            line-height: 0.8;
-            text-transform: uppercase;
+            display: flex; white-space: nowrap; font-size: 12vh;
+            font-weight: 900; line-height: 0.8; text-transform: uppercase;
             letter-spacing: -2px;
         }
-
-        /* Смещение строк для плотности */
-        .bg-row:nth-child(even) { transform: translateX(-10%); color: transparent; -webkit-text-stroke: 1px var(--white); }
+        .bg-row:nth-child(even) { transform: translateX(-15%); color: transparent; -webkit-text-stroke: 1px var(--white); }
         .bg-row:nth-child(odd) { transform: translateX(5%); }
 
-        /* --- ЭФФЕКТЫ --- */
-        .reveal {
+        /* --- КОНТЕНТ --- */
+        .container { position: relative; z-index: 10; width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; box-sizing: border-box; }
+        .section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- ИНТЕРАКТИВНЫЙ ЕВЕНТ --- */
+        .event-wrapper {
+            width: 100%; max-width: 450px;
+            border: 1px solid var(--white);
+            background: var(--black);
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .event-placeholder {
+            padding: 80px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: 0.4s;
+        }
+
+        .event-placeholder span {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 5px;
+            border: 1px solid var(--gray);
+            padding: 10px;
+        }
+
+        .event-content {
+            max-height: 0;
             opacity: 0;
             transform: translateY(20px);
-            transition: all 0.8s ease-out;
+            transition: all 0.9s cubic-bezier(0.19, 1, 0.22, 1);
         }
-        .reveal.active {
+
+        .main-poster {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: grayscale(1);
+        }
+
+        /* Состояние открытия */
+        .event-wrapper.opened {
+            max-width: 500px;
+            border-color: var(--white);
+        }
+
+        .event-wrapper.opened .event-placeholder {
+            display: none;
+        }
+
+        .event-wrapper.opened .event-content {
+            max-height: 2000px;
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* --- КОНТЕНТ --- */
-        .container {
-            position: relative;
-            z-index: 10; /* Поверх фона */
-            width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
-            box-sizing: border-box;
-        }
-
-        .section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        /* Терминал в ч/б */
-        .dev-terminal {
-            background: rgba(0,0,0,0.8);
-            border: 1px solid var(--white);
-            padding: 30px;
-            width: 100%;
-            max-width: 450px;
+        .poster-info {
+            padding: 25px;
             text-align: left;
-            backdrop-filter: blur(5px);
-        }
-
-        h1 {
-            font-size: clamp(4rem, 25vw, 11rem);
-            font-weight: 900;
-            margin: 0;
-            letter-spacing: -8px;
-            line-height: 0.8;
+            border-top: 1px solid var(--white);
             background: var(--black);
-            display: inline-block;
-            padding: 0 10px;
         }
 
-        .btn-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            width: 100%;
-            max-width: 500px;
-            margin-top: 30px;
-        }
-
-        .btn {
-            border: 1px solid var(--white);
-            padding: 18px;
-            color: var(--white);
-            text-decoration: none;
-            font-family: var(--font-mono);
-            font-size: 11px;
-            text-transform: uppercase;
-            background: var(--black);
-            transition: 0.3s;
-        }
-
+        /* --- UI --- */
+        h1 { font-size: clamp(4rem, 25vw, 11rem); font-weight: 900; margin: 0; letter-spacing: -8px; line-height: 0.8; }
+        .btn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; max-width: 500px; margin-top: 30px; }
+        .btn { border: 1px solid var(--white); padding: 18px; color: var(--white); text-decoration: none; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; transition: 0.3s; text-align: center; }
         .btn:hover { background: var(--white); color: var(--black); }
 
         .m-btn {
@@ -134,23 +123,22 @@
 
         @media (max-width: 600px) {
             .btn-grid { grid-template-columns: 1fr; }
-            .bg-row { font-size: 15vw; } /* На мобилках еще плотнее */
+            .bg-row { font-size: 14vw; }
+            .event-wrapper.opened { max-width: 100%; }
         }
     </style>
 </head>
 <body>
 
     <div class="bg-fixed">
-        <div class="bg-row">Early life crisis Early life crisis Early life crisis</div>
-        <div class="bg-row">Early life crisis Early life crisis Early life crisis</div>
-        <div class="bg-row">Early life crisis Early life crisis Early life crisis</div>
-        <div class="bg-row">Early life crisis Early life crisis Early life crisis</div>
-        <div class="bg-row">Early life crisis Early life crisis Early life crisis</div>
-        <div class="bg-row">Early life crisis Early life crisis Early life crisis</div>
-        <div class="bg-row">Early life crisis Early life crisis Early life crisis</div>
-        <div class="bg-row">Early life crisis Early life crisis Early life crisis</div>
-        <div class="bg-row">Early life crisis Early life crisis Early life crisis</div>
-        <div class="bg-row">Early life crisis Early life crisis Early life crisis</div>
+        <div class="bg-row">Early life crisis Early life crisis</div>
+        <div class="bg-row">Early life crisis Early life crisis</div>
+        <div class="bg-row">Early life crisis Early life crisis</div>
+        <div class="bg-row">Early life crisis Early life crisis</div>
+        <div class="bg-row">Early life crisis Early life crisis</div>
+        <div class="bg-row">Early life crisis Early life crisis</div>
+        <div class="bg-row">Early life crisis Early life crisis</div>
+        <div class="bg-row">Early life crisis Early life crisis</div>
     </div>
 
     <button class="m-btn" onclick="playMusic()" id="m-status">AUDIO // OFF</button>
@@ -158,23 +146,30 @@
 
     <div class="container">
         <div class="section">
-            <div class="dev-terminal reveal">
-                <div style="font-family: var(--font-mono); font-size: 10px; border-bottom: 1px solid var(--white); padding-bottom: 10px; margin-bottom: 15px;">
-                    [ SYSTEM_STATUS: STABLE ]
+            <div class="reveal active" style="border-left: 2px solid #fff; padding: 10px 0 10px 25px; text-align: left; width: 100%; max-width: 450px;">
+                <p style="font-family: var(--font-mono); font-size: 11px; color: var(--gray); margin-bottom: 10px;">[ INITIALIZING_CONNECTION ]</p>
+                <p style="font-family: var(--font-mono); margin: 0; font-size: 14px;">TARGET: NETTSPEND_2026</p>
+                <p style="font-family: var(--font-mono); margin: 0; font-size: 14px;">DATA: ENCRYPTED</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="event-wrapper reveal" id="eventBox" onclick="openEvent()">
+                <div class="event-placeholder">
+                    <span>DECRYPT_FILE_319</span>
                 </div>
-                <div style="font-family: var(--font-mono); font-size: 13px; line-height: 1.6;">
-                    UNIT: RME_STUDIO<br>
-                    RANK: LEAD_01<br>
-                    LOC: RUSSIA_FED<br>
-                    <span style="background: var(--white); color: var(--black);">ACTIVE OPERATIONAL MODE</span>
+                <div class="event-content">
+                    <img src="IMG_20260316_175210_319.jpg" alt="Event Poster" class="main-poster">
+                    <div class="poster-info">
+                        <p style="font-family: var(--font-mono); font-size: 14px; margin: 0; letter-spacing: 2px;">NETTSPEND // CONCERT</p>
+                        <p style="font-family: var(--font-mono); font-size: 10px; color: var(--gray); margin: 8px 0 0 0;">ALBUM: EARLY LIFE CRISIS | STATUS: SOON</p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="section">
             <h1 class="reveal">RME</h1>
-            <div class="reveal" style="font-family: var(--font-mono); letter-spacing: 5px; font-size: 12px; margin-top: 10px;">VIRTUAL PRODUCTION</div>
-            
             <div class="btn-grid reveal">
                 <a href="https://t.me/robloxhall2" class="btn">Telegram</a>
                 <a href="https://t.me/pr2rokl" class="btn">Admin 1</a>
@@ -184,6 +179,10 @@
     </div>
 
     <script>
+        function openEvent() {
+            document.getElementById('eventBox').classList.add('opened');
+        }
+
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
