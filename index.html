@@ -15,7 +15,7 @@
             scroll-behavior: smooth;
         }
 
-        /* МАКСИМАЛЬНО ВИДИМЫЙ ФОН (ЯРКОСТЬ 45%) */
+        /* МАКСИМАЛЬНО ЗАМЕТНЫЙ ФОН (ЯРКОСТЬ 60%) */
         .bg-layer {
             position: fixed;
             top: 0; left: 0;
@@ -36,9 +36,10 @@
         }
 
         .bg-text {
-            font-size: 2.2rem;
+            font-size: 2.3rem;
             font-weight: 900;
-            color: rgba(255, 255, 255, 0.45); 
+            /* УВЕЛИЧЕННАЯ ЯРКОСТЬ ДЛЯ ЗАМЕТНОСТИ (0.60) */
+            color: rgba(255, 255, 255, 0.60); 
             text-transform: uppercase;
             padding: 15px 35px;
             white-space: nowrap;
@@ -49,7 +50,7 @@
             100% { transform: translate(15%, 15%) rotate(-15deg); }
         }
 
-        /* МЕНЮ (БУРГЕР) */
+        /* МЕНЮ */
         #menu-toggle { display: none; }
         .menu-btn {
             position: fixed; top: 20px; right: 20px;
@@ -67,7 +68,7 @@
             backdrop-filter: blur(25px);
             z-index: 150; transition: 0.5s;
             display: flex; flex-direction: column;
-            padding: 100px 40px; border-left: 1px solid rgba(255,255,255,0.2);
+            padding: 100px 40px; border-left: 2px solid rgba(255,255,255,0.2);
         }
         .side-nav a, .side-nav label {
             color: #fff; text-decoration: none; font-family: monospace;
@@ -92,7 +93,7 @@
             padding: 0 30px;
         }
 
-        /* ТЕРМИНАЛ (CORE_LOG) */
+        /* CORE_LOG */
         .dev-terminal {
             border: 2px solid #fff;
             background: rgba(0, 0, 0, 0.9);
@@ -101,13 +102,29 @@
         }
         .dev-terminal::before { content: "CORE_LOG"; position: absolute; top: -14px; left: 20px; background: #000; padding: 0 12px; font-family: monospace; font-size: 0.8rem; color: #fff; border: 1px solid #fff; }
 
-        h1 { font-size: 4.5rem; letter-spacing: 20px; margin: 0; font-weight: bold; }
+        /* ИНТЕРАКТИВНЫЙ ГЛИТЧ НА RME */
+        h1 { font-size: 4.5rem; letter-spacing: 20px; margin: 0; font-weight: bold; position: relative; transition: 0.3s; }
+        h1:hover { animation: glitch 0.5s ease; text-shadow: 3px 0 #ff00c1, -3px 0 #00fff9; }
+        
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
         
         /* КНОПКИ */
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; max-width: 400px; margin-top: 35px; }
-        .btn { border: 2px solid #fff; padding: 18px; color: #fff; text-decoration: none; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 3px; transition: 0.3s; font-family: monospace; text-align: center;}
-        .btn:hover { background: #fff; color: #000; }
+        .btn { border: 2px solid #fff; padding: 18px; color: #fff; text-decoration: none; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 3px; transition: 0.3s; font-family: monospace; text-align: center; position: relative; overflow: hidden; }
+        .btn:hover { background: #fff; color: #000; box-shadow: 0 0 10px #fff; }
+
+        /* ADMIN 2 МЕРЦАНИЕ */
         .btn-full { grid-column: span 2; font-weight: bold; }
+        .btn-full:hover { animation: neon 1s infinite alternate; }
+        
+        @keyframes neon { from { box-shadow: 0 0 5px #fff; } to { box-shadow: 0 0 20px #fff; } }
 
         /* ОПИСАНИЕ О НАС */
         .info-block { display: none; margin-top: 25px; font-family: monospace; font-size: 0.85rem; color: #fff; line-height: 1.7; max-width: 380px; text-align: justify; animation: fadeIn 0.4s ease; }
@@ -116,8 +133,9 @@
 
         /* МУЗЫКА */
         .m-btn { position: fixed; top: 20px; left: 20px; z-index: 100; background: #000; border: 2px solid #fff; color: #fff; padding: 12px 18px; font-size: 0.65rem; cursor: pointer; font-family: monospace; }
+        .m-btn:hover { box-shadow: 0 0 10px #fff; }
 
-        footer { height: 35vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: monospace; font-size: 0.7rem; color: #888; letter-spacing: 5px; line-height: 3; border-top: 2px solid #fff; }
+        footer { height: 35vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: monospace; font-size: 0.7rem; color: #aaa; letter-spacing: 5px; line-height: 3; border-top: 2px solid #fff; }
     </style>
 </head>
 <body>
@@ -165,7 +183,7 @@
         </div>
 
         <div class="section">
-            <h1>RME</h1>
+            <h1 data-text="RME">RME</h1>
             <div style="font-family: monospace; color: #fff; letter-spacing: 8px; text-transform: uppercase; font-size: 0.9rem; margin-top: 10px;">Digital Music Events</div>
             <div class="btn-grid">
                 <a href="https://t.me/robloxhall2" class="btn">Telegram</a>
