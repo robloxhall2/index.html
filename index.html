@@ -20,29 +20,39 @@
             overflow-x: hidden;
         }
 
-        /* --- ФОНОВЫЙ ТЕКСТ (Адаптивный) --- */
+        /* --- ЭФФЕКТ ПОЯВЛЕНИЯ (REVEAL) --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1.2s cubic-bezier(0.2, 1, 0.3, 1);
+            filter: blur(5px);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
+        /* Задержки для последовательного появления */
+        .delay-1 { transition-delay: 0.2s; }
+        .delay-2 { transition-delay: 0.4s; }
+        .delay-3 { transition-delay: 0.6s; }
+
+        /* --- ФОН --- */
         .bg-layer {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 1;
-            pointer-events: none;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            align-items: center;
-            opacity: 0.15;
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; z-index: 1;
+            pointer-events: none; display: flex;
+            flex-direction: column; justify-content: space-around;
+            align-items: center; opacity: 0.15;
         }
 
         .bg-text {
-            /* font-size подстраивается под ширину экрана */
             font-size: clamp(2rem, 8vw, 5rem);
-            font-weight: 900;
-            text-transform: uppercase;
-            color: transparent; 
-            -webkit-text-stroke: 1px var(--accent);
-            white-space: nowrap;
-            transform: rotate(-12deg);
+            font-weight: 900; text-transform: uppercase;
+            color: transparent; -webkit-text-stroke: 1px var(--accent);
+            white-space: nowrap; transform: rotate(-12deg);
             animation: pulse 5s infinite ease-in-out;
         }
 
@@ -51,22 +61,18 @@
             50% { opacity: 0.8; transform: rotate(-10deg) scale(1.05); }
         }
 
-        /* --- КНОПКА МУЗЫКИ --- */
+        /* --- ИНТЕРФЕЙС --- */
         .m-btn {
             position: fixed; top: 20px; left: 20px;
-            z-index: 1001;
-            background: var(--bg); border: 1px solid var(--accent);
+            z-index: 1001; background: var(--bg); border: 1px solid var(--accent);
             color: var(--accent); padding: 10px 15px;
-            font-family: var(--font-mono); font-size: 12px;
-            cursor: pointer;
+            font-family: var(--font-mono); font-size: 12px; cursor: pointer;
         }
 
-        /* --- МЕНЮ (Универсальное) --- */
         #menu-toggle { display: none; }
         .menu-btn {
             position: fixed; top: 20px; right: 20px;
-            width: 45px; height: 45px;
-            z-index: 1001; cursor: pointer;
+            width: 45px; height: 45px; z-index: 1001; cursor: pointer;
             background: var(--bg); border: 1px solid var(--accent);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
@@ -78,86 +84,49 @@
             background: rgba(0,0,0,0.98); z-index: 1000;
             transition: 0.5s; padding: 100px 40px;
             display: flex; flex-direction: column;
-            border-left: 1px solid var(--accent);
-            box-sizing: border-box;
+            border-left: 1px solid var(--accent); box-sizing: border-box;
         }
 
         #menu-toggle:checked ~ .side-nav { right: 0; }
-        #menu-toggle:checked ~ .menu-btn span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        #menu-toggle:checked ~ .menu-btn span:nth-child(2) { opacity: 0; }
-        #menu-toggle:checked ~ .menu-btn span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-        .side-nav a {
-            color: var(--accent); text-decoration: none;
-            font-family: var(--font-mono); font-size: 1.2rem;
-            margin-bottom: 25px; letter-spacing: 2px;
-        }
-
-        /* --- КОНТЕНТ --- */
         .container {
             position: relative; z-index: 10;
-            width: 100%; max-width: 1200px;
-            margin: 0 auto;
+            width: 100%; max-width: 1200px; margin: 0 auto;
         }
 
         .section {
-            min-height: 100vh;
-            display: flex; flex-direction: column;
+            min-height: 100vh; display: flex; flex-direction: column;
             justify-content: center; align-items: center;
-            padding: 20px; box-sizing: border-box;
+            padding: 40px 20px; box-sizing: border-box;
         }
 
-        /* Терминал: на ПК шире, на телефоне на весь экран */
         .dev-terminal {
-            border: 1px solid var(--accent);
-            padding: 25px; width: 100%;
-            max-width: 500px; background: rgba(0,0,0,0.8);
-            text-align: left; position: relative;
+            border: 1px solid var(--accent); padding: 25px;
+            width: 100%; max-width: 500px; background: rgba(0,0,0,0.8);
+            text-align: left;
         }
 
         h1 { 
-            font-size: clamp(3.5rem, 18vw, 8rem); 
-            margin: 0; letter-spacing: clamp(10px, 3vw, 25px); 
+            font-size: clamp(3.5rem, 18vw, 8rem); margin: 0; 
+            letter-spacing: clamp(10px, 3vw, 25px); 
         }
 
-        /* Сетка кнопок: 2 колонки на ПК, 1 на телефоне */
         .btn-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px; width: 100%; max-width: 500px;
-            margin-top: 30px;
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 15px; width: 100%; max-width: 500px; margin-top: 30px;
         }
 
         .btn {
             border: 1px solid var(--accent); padding: 18px;
             color: var(--accent); text-decoration: none;
             font-family: var(--font-mono); font-size: 0.8rem;
-            text-align: center; transition: 0.3s;
-            text-transform: uppercase;
+            text-align: center; transition: 0.3s; text-transform: uppercase;
         }
 
         .btn:hover { background: var(--accent); color: var(--bg); }
 
-        /* --- MEDIA QUERIES (Адаптация) --- */
         @media (max-width: 600px) {
-            .btn-grid {
-                grid-template-columns: 1fr; /* Одна колонка на мобильных */
-            }
-            .btn-full { grid-column: auto; }
-            
-            .dev-terminal {
-                padding: 15px;
-            }
-
-            .m-btn {
-                padding: 8px 10px;
-                font-size: 10px;
-            }
-        }
-
-        /* Для очень больших экранов */
-        @media (min-width: 1200px) {
-            .dev-terminal { max-width: 650px; }
+            .btn-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -170,9 +139,8 @@
     <label for="menu-toggle" class="menu-btn"><span></span><span></span><span></span></label>
     
     <nav class="side-nav">
-        <a href="https://t.me/robloxhall2" onclick="closeMenu()">RME CHANNEL</a>
-        <a href="https://t.me/pr2rokl" onclick="closeMenu()">ADMIN 1</a>
-        <a href="https://t.me/Roretyu" onclick="closeMenu()">ADMIN 2</a>
+        <a href="https://t.me/robloxhall2" style="color:white; text-decoration:none; margin-bottom:20px; font-family:monospace;">RME CHANNEL</a>
+        <a href="https://t.me/pr2rokl" style="color:white; text-decoration:none; margin-bottom:20px; font-family:monospace;">ADMIN 1</a>
     </nav>
 
     <div class="bg-layer">
@@ -183,7 +151,7 @@
 
     <div class="container">
         <div class="section">
-            <div class="dev-terminal">
+            <div class="dev-terminal reveal">
                 <div style="font-family: var(--font-mono); border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px; font-size: 0.8rem;">
                     > SYSTEM STATUS: ONLINE
                 </div>
@@ -196,10 +164,12 @@
         </div>
 
         <div class="section">
-            <h1>RME</h1>
-            <p style="font-family: var(--font-mono); letter-spacing: 5px; font-size: 0.7rem; color: #888;">// DIGITAL CONCERT EXPERIENCE</p>
+            <h1 class="reveal">RME</h1>
+            <p class="reveal delay-1" style="font-family: var(--font-mono); letter-spacing: 5px; font-size: 0.7rem; color: #888; margin-bottom: 30px;">
+                // DIGITAL CONCERT EXPERIENCE
+            </p>
             
-            <div class="btn-grid">
+            <div class="btn-grid reveal delay-2">
                 <a href="https://t.me/robloxhall2" class="btn">Telegram</a>
                 <a href="https://t.me/pr2rokl" class="btn">Admin 1</a>
                 <a href="https://t.me/Roretyu" class="btn" style="grid-column: 1 / -1;">Admin 2 // Roretyu</a>
@@ -208,15 +178,29 @@
     </div>
 
     <script>
+        // Функция появления элементов при скролле
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150; // Дистанция до появления
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        window.addEventListener("scroll", reveal);
+        // Запускаем один раз при загрузке, чтобы показать первый экран
+        window.addEventListener("load", reveal);
+
         function playMusic() {
             var m = document.getElementById("track");
             var s = document.getElementById("m-status");
             if (m.paused) { m.play(); s.innerHTML = "[ AUDIO: ON ]"; }
             else { m.pause(); s.innerHTML = "[ AUDIO: OFF ]"; }
-        }
-
-        function closeMenu() {
-            document.getElementById("menu-toggle").checked = false;
         }
     </script>
 </body>
